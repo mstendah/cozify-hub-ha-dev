@@ -13,6 +13,8 @@
 * Switching mode reloads the entry. Controllable entities of the other mode become unavailable in the entity
   registry and can be deleted there. README now has an entity mapping table and an example of a dashboard
   that works in both modes (`conditional` rows).
+* Fixed blocking file read of the API spec inside the event loop (found in the live Home Assistant log); the
+  spec is now loaded in the executor at setup. The ppm unit constant works on both old and new cores.
 * Tests: 60 (new `test_readonly.py` covers the request guard, the real transport, services, entity set,
   the setup flow and the access-mode sensor).
 

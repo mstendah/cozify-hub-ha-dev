@@ -11,10 +11,10 @@ from collections.abc import Callable
 from dataclasses import dataclass
 from typing import Any
 
+import homeassistant.const as _const
 from homeassistant.components.binary_sensor import BinarySensorDeviceClass
 from homeassistant.components.sensor import SensorDeviceClass, SensorStateClass
 from homeassistant.const import (
-    CONCENTRATION_PARTS_PER_MILLION,
     PERCENTAGE,
     EntityCategory,
     UnitOfElectricCurrent,
@@ -23,6 +23,13 @@ from homeassistant.const import (
     UnitOfPower,
     UnitOfPressure,
     UnitOfTemperature,
+)
+
+# Newer Home Assistant moved ppm to UnitOfRatio; keep working on older cores too.
+CONCENTRATION_PARTS_PER_MILLION = (
+    _const.UnitOfRatio.PARTS_PER_MILLION
+    if hasattr(_const, "UnitOfRatio")
+    else _const.CONCENTRATION_PARTS_PER_MILLION
 )
 
 # Capabilities that are covered by dedicated platforms; their writable

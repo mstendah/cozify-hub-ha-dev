@@ -11,6 +11,7 @@ from homeassistant.core import HomeAssistant
 from homeassistant.helpers.aiohttp_client import async_get_clientsession
 from homeassistant.helpers.typing import ConfigType
 
+from . import spec
 from .api import HubClient
 from .const import (
     CLOUD_BASES,
@@ -74,6 +75,8 @@ def build_client(hass: HomeAssistant, entry: ConfigEntry) -> HubClient:
 
 
 async def async_setup_entry(hass: HomeAssistant, entry: CozifyConfigEntry) -> bool:
+    # Read the API spec file outside the event loop (it is cached afterwards).
+    await hass.async_add_executor_job(spec.load_spec)
     client = build_client(hass, entry)
     coordinator = CozifyCoordinator(hass, entry, client)
     await coordinator.async_config_entry_first_refresh()
