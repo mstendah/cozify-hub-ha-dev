@@ -20,7 +20,7 @@ What makes it different from a plain device bridge:
 ## Installation
 
 1. HACS -> Integrations -> three dots -> **Custom repositories** -> add
-   `https://github.com/mstendah/ha-cozify-hub` as category *Integration*.
+   `https://github.com/mstendah/cozify-hub-ha-dev` as category *Integration*.
 2. Install **Cozify Hub**, restart Home Assistant.
 3. Settings -> Devices & services -> **Add integration** -> *Cozify Hub*.
 4. Enter your Cozify account email. Cozify sends a **one-time code** to that address; enter it.

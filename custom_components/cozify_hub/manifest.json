@@ -3,10 +3,10 @@
   "name": "Cozify Hub",
   "codeowners": ["@mstendah"],
   "config_flow": true,
-  "documentation": "https://github.com/mstendah/ha-cozify-hub",
+  "documentation": "https://github.com/mstendah/cozify-hub-ha-dev",
   "integration_type": "hub",
   "iot_class": "local_polling",
-  "issue_tracker": "https://github.com/mstendah/ha-cozify-hub/issues",
+  "issue_tracker": "https://github.com/mstendah/cozify-hub-ha-dev/issues",
   "requirements": [],
   "version": "0.1.0"
 }
