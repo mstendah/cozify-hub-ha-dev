@@ -3,8 +3,8 @@ import importlib.util
 import sys
 from pathlib import Path
 
-from custom_components.cozify_hub import spec
-from custom_components.cozify_hub.entity_defs import CURATED_ATTRS
+from custom_components.cozify_hub_dev import spec
+from custom_components.cozify_hub_dev.entity_defs import CURATED_ATTRS
 
 ROOT = Path(__file__).resolve().parent.parent
 spec_mod = importlib.util.spec_from_file_location("sync_api_docs", ROOT / "tools" / "sync_api_docs.py")
@@ -65,7 +65,7 @@ def test_client_only_uses_documented_endpoints():
     """Every endpoint the typed client wraps must exist in the docs."""
     import re
 
-    src = (ROOT / "custom_components/cozify_hub/api.py").read_text()
+    src = (ROOT / "custom_components/cozify_hub_dev/api.py").read_text()
     used = set(re.findall(r'call\(\s*"(GET|PUT|POST|DELETE)",\s*"(/[A-Za-z/]+)"', src))
     used |= set(re.findall(r'call\(\s*"(GET|PUT|POST|DELETE)",\s*\n?\s*"(/[A-Za-z/]+)"', src))
     documented = {(e["method"], e["path"]) for e in spec.load_spec()["endpoints"]}
@@ -77,7 +77,7 @@ def test_commands_we_send_are_documented():
     import re
 
     sent = set()
-    for f in (ROOT / "custom_components/cozify_hub").glob("*.py"):
+    for f in (ROOT / "custom_components/cozify_hub_dev").glob("*.py"):
         sent |= set(re.findall(r'"(CMD_[A-Z_]+)"', f.read_text()))
     documented = set(spec.load_spec()["command_types"])
     # CMD_DEVICE_OFF/ON and friends appear in the docs examples; STATE_* are not commands.

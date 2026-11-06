@@ -10,6 +10,7 @@ from homeassistant.core import HomeAssistant, callback
 from homeassistant.helpers import entity_registry as er
 from homeassistant.helpers.entity_platform import AddEntitiesCallback
 
+from .const import DOMAIN
 from .coordinator import CozifyCoordinator
 from .entity import CozifyEntity, CozifyHubEntity, setup_device_platform
 
@@ -115,7 +116,7 @@ async def async_setup_entry(
             registry = er.async_get(hass)
             for rule_id in gone:
                 unique = f"{coordinator.client.hub_id}_rule_{rule_id}"
-                ent = registry.async_get_entity_id("switch", "cozify_hub", unique)
+                ent = registry.async_get_entity_id("switch", DOMAIN, unique)
                 if ent:
                     registry.async_remove(ent)
                 known.discard(rule_id)

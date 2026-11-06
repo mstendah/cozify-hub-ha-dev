@@ -7,8 +7,8 @@ from homeassistant.config_entries import SOURCE_USER
 from homeassistant.data_entry_flow import FlowResultType
 from pytest_homeassistant_custom_component.common import MockConfigEntry
 
-from custom_components.cozify_hub.api import AuthError
-from custom_components.cozify_hub.const import CONF_CLOUD_TOKEN, CONF_EMAIL, CONF_HUB_ID, DOMAIN
+from custom_components.cozify_hub_dev.api import AuthError
+from custom_components.cozify_hub_dev.const import CONF_CLOUD_TOKEN, CONF_EMAIL, CONF_HUB_ID, DOMAIN
 
 from .conftest import HUB_ID
 
@@ -18,14 +18,14 @@ def _jwt(**claims):
     return f"h.{body}.s"
 
 
-CLOUD = "custom_components.cozify_hub.config_flow.CozifyCloud"
-FLOW = "custom_components.cozify_hub.config_flow"
+CLOUD = "custom_components.cozify_hub_dev.config_flow.CozifyCloud"
+FLOW = "custom_components.cozify_hub_dev.config_flow"
 
 
 async def test_full_flow(hass):
     key = _jwt(hub_name="Office")
     with patch(CLOUD) as cloud_cls, patch(f"{FLOW}.find_local_host", AsyncMock(return_value="192.0.2.5")), \
-         patch(f"{FLOW}.HubClient") as client_cls, patch("custom_components.cozify_hub.async_setup_entry", return_value=True):
+         patch(f"{FLOW}.HubClient") as client_cls, patch("custom_components.cozify_hub_dev.async_setup_entry", return_value=True):
         cloud = cloud_cls.return_value
         cloud.request_login_code = AsyncMock()
         cloud.login = AsyncMock(return_value="TOKEN")
@@ -68,7 +68,7 @@ async def test_existing_token_skips_code(hass):
         cloud.hub_keys = AsyncMock(return_value={"other-hub": _jwt(), HUB_ID: _jwt(hub_name="Second")})
         cloud.lan_ips = AsyncMock(return_value=[])
         with patch(f"{FLOW}.find_local_host", AsyncMock(return_value=None)), patch(f"{FLOW}.HubClient") as client_cls, \
-             patch("custom_components.cozify_hub.async_setup_entry", return_value=True):
+             patch("custom_components.cozify_hub_dev.async_setup_entry", return_value=True):
             client_cls.return_value.bootstrap = AsyncMock(return_value={"name": "Second"})
             client_cls.return_value.cloud_base = "x"
             r = await hass.config_entries.flow.async_init(DOMAIN, context={"source": SOURCE_USER})

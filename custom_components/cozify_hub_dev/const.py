@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-DOMAIN = "cozify_hub"
+DOMAIN = "cozify_hub_dev"
 MANUFACTURER = "Cozify"
 
 CONF_EMAIL = "email"
@@ -32,7 +32,7 @@ POLL_INTERVAL_REMOTE = 5
 # Cloud tokens live 4 weeks; refresh when less than 2 weeks remain.
 TOKEN_REFRESH_MARGIN_S = 14 * 24 * 3600
 
-EVENT_DOORBELL = "cozify_hub_event"
+EVENT_DOORBELL = "cozify_hub_dev_event"
 SIGNAL_NEW_DEVICES = f"{DOMAIN}_new_devices_{{}}"
 
 # Services

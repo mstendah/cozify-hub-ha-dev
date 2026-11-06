@@ -1,4 +1,4 @@
-# Cozify Hub for Home Assistant
+# Cozify Hub (dev) for Home Assistant
 
 A [HACS](https://hacs.xyz) custom integration for [Cozify](https://cozify.fi) hubs. It talks to the
 documented Cozify Hub API, prefers your **local network** and falls back to the **Cozify cloud relay**.
@@ -9,20 +9,23 @@ What makes it different from a plain device bridge:
   doorbells, hub **scenes** and hub **rules** (as switches) are all normal entities you can use in
   automations, dashboards and voice assistants.
 * **Custom rules.** Deploy, upgrade and inspect the Python custom rules that run *on the hub*
-  (`cozify_hub.deploy_custom_rule`, `get_rule_log`) - without losing the rule instances and their settings.
-* **Workload advisor.** `cozify_hub.suggest_workload_split` reads your HA automations and tells you which
+  (`cozify_hub_dev.deploy_custom_rule`, `get_rule_log`) - without losing the rule instances and their settings.
+* **Workload advisor.** `cozify_hub_dev.suggest_workload_split` reads your HA automations and tells you which
   should run on the hub (works offline, no round trip), which should be split, and which belong in Home Assistant.
 * **Hub rule proposals.** Ask the hub which rules it recommends for a device and create them from HA.
 * **Evolves with the API documentation.** Entities are generated from a spec that is *generated from the
   official API docs* (`tools/sync_api_docs.py`), a weekly workflow opens a PR when the docs change, and
   tests fail if the docs rename something this integration relies on.
 
+> **Dev channel.** This repository installs as `cozify_hub_dev` so it can run alongside a production
+> `cozify_hub` integration. Services are `cozify_hub_dev.*`. See [CHANGELOG](CHANGELOG.md).
+
 ## Installation
 
 1. HACS -> Integrations -> three dots -> **Custom repositories** -> add
    `https://github.com/mstendah/cozify-hub-ha-dev` as category *Integration*.
-2. Install **Cozify Hub**, restart Home Assistant.
-3. Settings -> Devices & services -> **Add integration** -> *Cozify Hub*.
+2. Install **Cozify Hub (dev)**, restart Home Assistant.
+3. Settings -> Devices & services -> **Add integration** -> *Cozify Hub (dev)*.
 4. Enter your Cozify account email. Cozify sends a **one-time code** to that address; enter it.
    (The code is single use. If it fails, request a new one.)
 5. Pick the hub. The integration looks for the hub on your LAN (port 8893) and stores the address;
@@ -41,13 +44,13 @@ Several hubs on one account: add the integration again - the existing login is r
 | `CONTROL_TEMPERATURE` | `climate` (heat, target temperature) |
 | `TEMPERATURE`, `HUMIDITY`, `CO2`, `PRESSURE`, `LUX`, power/energy/current/phase values, battery | `sensor` |
 | `MOTION`, `CONTACT`, `MOISTURE`, `SMOKE`, `TWILIGHT`, `SIREN`, battery low, reachable | `binary_sensor` |
-| `GENERATE_ALERT` (doorbells) | `event` + bus event `cozify_hub_event` |
+| `GENERATE_ALERT` (doorbells) | `event` + bus event `cozify_hub_dev_event` |
 | Hub scenes | `scene` |
 | Hub rules | `switch` ("Rule: ...") |
 | Everything else the docs define | disabled, diagnostic generic `sensor`/`binary_sensor` (enable what you need) |
 
 Not yet supported (shown in diagnostics): aircon, shutters/covers, cameras, speakers/media. They need
-verified command semantics; use `cozify_hub.send_command` for raw access meanwhile.
+verified command semantics; use `cozify_hub_dev.send_command` for raw access meanwhile.
 
 ### Doorbell example
 
@@ -67,20 +70,20 @@ automation:
 
 | Service | Purpose |
 | --- | --- |
-| `cozify_hub.run_scene` | Turn a hub scene on/off by name or id |
-| `cozify_hub.set_rule_state` | Enable/disable a hub rule |
-| `cozify_hub.delete_rule` | Delete a rule instance (`confirm: true`) |
-| `cozify_hub.deploy_custom_rule` | Install/upgrade a Python custom rule, preserving instances and their settings |
-| `cozify_hub.get_rule_log` | Read the rule log (response data; times are UTC) |
-| `cozify_hub.get_rule_proposals` | Ask the hub for rule proposals for entities/devices |
-| `cozify_hub.create_rule_from_proposal` | Create a rule from a proposal |
-| `cozify_hub.suggest_workload_split` | Hub vs HA recommendations for your automations |
-| `cozify_hub.send_command` | Raw `PUT /devices/command` payloads for anything not modelled yet |
+| `cozify_hub_dev.run_scene` | Turn a hub scene on/off by name or id |
+| `cozify_hub_dev.set_rule_state` | Enable/disable a hub rule |
+| `cozify_hub_dev.delete_rule` | Delete a rule instance (`confirm: true`) |
+| `cozify_hub_dev.deploy_custom_rule` | Install/upgrade a Python custom rule, preserving instances and their settings |
+| `cozify_hub_dev.get_rule_log` | Read the rule log (response data; times are UTC) |
+| `cozify_hub_dev.get_rule_proposals` | Ask the hub for rule proposals for entities/devices |
+| `cozify_hub_dev.create_rule_from_proposal` | Create a rule from a proposal |
+| `cozify_hub_dev.suggest_workload_split` | Hub vs HA recommendations for your automations |
+| `cozify_hub_dev.send_command` | Raw `PUT /devices/command` payloads for anything not modelled yet |
 
 ### Deploying a custom rule
 
 ```yaml
-action: cozify_hub.deploy_custom_rule
+action: cozify_hub_dev.deploy_custom_rule
 data:
   file: /config/cozify/my_rule.py     # must be in allowlist_external_dirs; or pass `source:`
   preserve_instances: true
@@ -93,7 +96,7 @@ outputs, extras and timers, and restores their on/off state. Needs the hub's `CU
 ### Workload advisor
 
 ```yaml
-action: cozify_hub.suggest_workload_split
+action: cozify_hub_dev.suggest_workload_split
 data: {notify: true}
 response_variable: advice
 ```
@@ -118,7 +121,7 @@ Safety-related sensors (smoke, moisture, ...) and cloud-only connections raise t
 ## Keeping up with the API documentation
 
 ```
-tools/sync_api_docs.py   docs -> custom_components/cozify_hub/api_spec.json
+tools/sync_api_docs.py   docs -> custom_components/cozify_hub_dev/api_spec.json
 tools/coverage_report.py what the integration only handles generically
 .github/workflows/api-docs-sync.yml   weekly: sync, test, open a PR
 tests/test_sync_tool.py  guards: curated attributes still documented, client uses documented endpoints

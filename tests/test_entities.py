@@ -5,7 +5,7 @@ from homeassistant.helpers import entity_registry as er
 from homeassistant.util import dt as dt_util
 from pytest_homeassistant_custom_component.common import async_fire_time_changed
 
-from custom_components.cozify_hub.const import DOMAIN, EVENT_DOORBELL
+from custom_components.cozify_hub_dev.const import DOMAIN, EVENT_DOORBELL
 
 from .conftest import CO2, DOORBELL, LIGHT, RULE, SOCKET, THERMO
 
@@ -102,7 +102,7 @@ async def test_unknown_capability_gets_generic_entity(hass, setup):
 
 async def test_generic_defs_follow_spec(hass, setup):
     """Adding a documented capability to a device creates a fallback sensor for its attribute."""
-    from custom_components.cozify_hub.sensor import _sensor_defs_for
+    from custom_components.cozify_hub_dev.sensor import _sensor_defs_for
 
     coordinator = hass.config_entries.async_entries(DOMAIN)[0].runtime_data
     dev = coordinator.devices[CO2]

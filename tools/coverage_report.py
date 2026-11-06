@@ -11,7 +11,7 @@ import sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
-PKG = ROOT / "custom_components" / "cozify_hub"
+PKG = ROOT / "custom_components" / "cozify_hub_dev"
 spec = json.loads((PKG / "api_spec.json").read_text())
 
 handled_caps = set(re.findall(r'"([A-Z_0-9]{3,})"', (PKG / "entity_defs.py").read_text()))

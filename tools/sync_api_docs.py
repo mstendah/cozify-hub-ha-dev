@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Generate ``custom_components/cozify_hub/api_spec.json`` from the Cozify Hub API docs.
+"""Generate ``custom_components/cozify_hub_dev/api_spec.json`` from the Cozify Hub API docs.
 
 The integration is *spec driven*: which entities exist for a device, which
 attributes are writable, which hub features are known and which endpoints the
@@ -29,7 +29,7 @@ DOCS_URL = "https://cozify.github.io/docs/files/hub_api.md"
 SPEC_PATH = (
     Path(__file__).resolve().parent.parent
     / "custom_components"
-    / "cozify_hub"
+    / "cozify_hub_dev"
     / "api_spec.json"
 )
 

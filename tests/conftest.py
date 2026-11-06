@@ -10,8 +10,8 @@ from unittest.mock import patch
 import pytest
 from pytest_homeassistant_custom_component.common import MockConfigEntry
 
-from custom_components.cozify_hub.api import HubClient
-from custom_components.cozify_hub.const import (
+from custom_components.cozify_hub_dev.api import HubClient
+from custom_components.cozify_hub_dev.const import (
     CONF_CLOUD_BASE,
     CONF_CLOUD_TOKEN,
     CONF_EMAIL,
@@ -127,7 +127,7 @@ def fake_hub():
         holder["hub"] = hub
         return hub
 
-    with patch("custom_components.cozify_hub.build_client", side_effect=build):
+    with patch("custom_components.cozify_hub_dev.build_client", side_effect=build):
         yield holder
 
 

@@ -1,8 +1,8 @@
 import pytest
 from homeassistant.exceptions import ServiceValidationError
 
-from custom_components.cozify_hub.const import DOMAIN
-from custom_components.cozify_hub.rules import RuleError, extract_rule_type, validate_source
+from custom_components.cozify_hub_dev.const import DOMAIN
+from custom_components.cozify_hub_dev.rules import RuleError, extract_rule_type, validate_source
 
 from .conftest import RULE
 

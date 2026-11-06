@@ -14,7 +14,7 @@ from dataclasses import asdict, dataclass, field
 from typing import Any
 
 # Services that only act on hub-style devices
-LOCAL_SERVICE_DOMAINS = {"light", "switch", "scene", "climate", "homeassistant", "cozify_hub", "input_boolean_off"}
+LOCAL_SERVICE_DOMAINS = {"light", "switch", "scene", "climate", "homeassistant", "cozify_hub_dev", "input_boolean_off"}
 # Services that need HA only (or other integrations)
 HA_ONLY_SERVICE_DOMAINS = {
     "notify", "tts", "persistent_notification", "media_player", "camera", "conversation",
@@ -204,18 +204,18 @@ def analyze_automation(
     if rec.score >= 75 and not ha_only and not external_triggers:
         rec.verdict = "move_to_hub"
         rec.next_step = (
-            "Recreate it as a hub rule (native template or a custom rule via cozify_hub.deploy_custom_rule), "
+            "Recreate it as a hub rule (native template or a custom rule via cozify_hub_dev.deploy_custom_rule), "
             "then disable the HA automation."
         )
     elif triggers_hub_only and (ha_only or other_ents or foreign_services) and hub_ents:
         rec.verdict = "split"
         rec.next_step = (
             "Let a hub rule do the device reaction and keep only the notification/integration part in HA, "
-            "triggered by the rule's switch or the cozify_hub_event event."
+            "triggered by the rule's switch or the cozify_hub_dev_event event."
         )
     elif rec.score >= 55 and not ha_only:
         rec.verdict = "split"
-        rec.next_step = "Move the Cozify-only actions to a hub scene (cozify_hub.run_scene) and keep the logic in HA."
+        rec.next_step = "Move the Cozify-only actions to a hub scene (cozify_hub_dev.run_scene) and keep the logic in HA."
     else:
         rec.verdict = "keep_in_ha"
         rec.next_step = "Keep in Home Assistant."

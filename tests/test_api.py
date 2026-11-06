@@ -3,7 +3,7 @@ import json
 import pytest
 from homeassistant.helpers.aiohttp_client import async_get_clientsession
 
-from custom_components.cozify_hub.api import (
+from custom_components.cozify_hub_dev.api import (
     AuthError,
     CannotConnect,
     CozifyCloud,

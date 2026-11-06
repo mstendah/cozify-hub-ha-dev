@@ -1,4 +1,4 @@
-from custom_components.cozify_hub.advisor import (
+from custom_components.cozify_hub_dev.advisor import (
     analyze_automation,
     extract_references,
     render_markdown,

@@ -10,6 +10,7 @@ from homeassistant.core import HomeAssistant, callback
 from homeassistant.helpers import entity_registry as er
 from homeassistant.helpers.entity_platform import AddEntitiesCallback
 
+from .const import DOMAIN
 from .coordinator import CozifyCoordinator
 from .entity import CozifyHubEntity
 
@@ -53,7 +54,7 @@ async def async_setup_entry(
             registry = er.async_get(hass)
             for scene_id in gone:
                 ent = registry.async_get_entity_id(
-                    "scene", "cozify_hub", f"{coordinator.client.hub_id}_scene_{scene_id}"
+                    "scene", DOMAIN, f"{coordinator.client.hub_id}_scene_{scene_id}"
                 )
                 if ent:
                     registry.async_remove(ent)
