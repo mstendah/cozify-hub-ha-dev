@@ -9,6 +9,10 @@
   available as sensors: a **Power** binary sensor for switches/sockets/lights, a **Rule: <name>** binary
   sensor per hub rule and a **Target temperature** sensor for thermostats. Existing entries keep full control
   until the option is turned on; new setups default to read-only (shown as an extra step).
+* A **Read-only mode** switch (config entity on every hub) toggles the mode straight from a dashboard or an
+  automation. It only changes the integration's own setting and never talks to the hub; the entry reloads.
+* Fixed: the integration now unloads the platforms it actually loaded, so switching mode no longer leaves
+  lights/climate/scenes behind.
 * An **Access mode** diagnostic sensor (`read_only` / `full`) lets dashboards adapt to the setting.
 * Switching mode reloads the entry. Controllable entities of the other mode become unavailable in the entity
   registry and can be deleted there. README now has an entity mapping table and an example of a dashboard

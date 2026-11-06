@@ -6,11 +6,12 @@ from typing import Any
 
 from homeassistant.components.switch import SwitchDeviceClass, SwitchEntity
 from homeassistant.config_entries import ConfigEntry
+from homeassistant.const import EntityCategory
 from homeassistant.core import HomeAssistant, callback
 from homeassistant.helpers import entity_registry as er
 from homeassistant.helpers.entity_platform import AddEntitiesCallback
 
-from .const import DOMAIN
+from .const import CONF_READ_ONLY, DOMAIN
 from .coordinator import CozifyCoordinator
 from .entity import CozifyEntity, CozifyHubEntity, setup_device_platform
 
@@ -93,10 +94,55 @@ class CozifyRuleSwitch(CozifyHubEntity, SwitchEntity):
         self.async_write_ha_state()
 
 
+class ReadOnlySwitch(CozifyHubEntity, SwitchEntity):
+    """Toggle for the integration's read-only mode.
+
+    This only changes the integration's own setting (the config entry options); it never
+    talks to the hub. Switching reloads the entry, so controllable entities appear or
+    disappear accordingly.
+    """
+
+    _attr_name = "Read-only mode"
+    _attr_icon = "mdi:lock"
+    _attr_entity_category = EntityCategory.CONFIG
+
+    def __init__(self, coordinator: CozifyCoordinator, entry: ConfigEntry) -> None:
+        super().__init__(coordinator, "read_only")
+        self._entry = entry
+
+    @property
+    def available(self) -> bool:
+        return True  # a setting of the integration, usable even while the hub is unreachable
+
+    @property
+    def is_on(self) -> bool:
+        from . import is_read_only
+
+        return is_read_only(self._entry)
+
+    async def _set(self, value: bool) -> None:
+        if self.is_on == value:
+            return
+        self.hass.config_entries.async_update_entry(
+            self._entry, options={**self._entry.options, CONF_READ_ONLY: value}
+        )  # the update listener reloads the entry
+
+    async def async_turn_on(self, **kwargs: Any) -> None:
+        await self._set(True)
+
+    async def async_turn_off(self, **kwargs: Any) -> None:
+        await self._set(False)
+
+
 async def async_setup_entry(
     hass: HomeAssistant, entry: ConfigEntry, async_add_entities: AddEntitiesCallback
 ) -> None:
+    from . import is_read_only
+
     coordinator: CozifyCoordinator = entry.runtime_data
+    async_add_entities([ReadOnlySwitch(coordinator, entry)])
+    if is_read_only(entry):
+        return  # nothing else that could write to the hub
     setup_device_platform(
         hass, entry, async_add_entities,
         lambda c, dev_id: [CozifySwitch(c, dev_id)] if is_switch_device(c.capabilities(dev_id)) else [],

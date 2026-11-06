@@ -50,7 +50,9 @@ everything. Reads, rule logs and rule proposals keep working.
 | `climate.<device>` | `sensor.<device>_target_temperature` (current temperature and heating demand are sensors in both modes) |
 | `scene.<hub>_<name>` | not created |
 
-The diagnostic sensor `sensor.<hub>_access_mode` reports `read_only` or `full`. Existing entries keep full
+The switch `switch.<hub>_read_only_mode` (configuration category) turns read-only mode on and off from a
+dashboard or automation. It only changes this integration's setting; it never writes to the hub. The
+diagnostic sensor `sensor.<hub>_access_mode` reports `read_only` or `full`. Existing entries keep full
 control until you turn the option on. Switching mode reloads the integration; entities of the other mode become
 unavailable and can be removed from the entity registry.
 

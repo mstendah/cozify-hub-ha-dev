@@ -41,7 +41,8 @@ PLATFORMS = [
 ]
 # Read-only hubs get no controllable entities at all: states are mirrored as
 # sensors / binary sensors, so nothing in the UI can write to the hub.
-READ_ONLY_PLATFORMS = [Platform.BINARY_SENSOR, Platform.EVENT, Platform.SENSOR]
+# (The switch platform is loaded too, but only for the read-only toggle itself.)
+READ_ONLY_PLATFORMS = [Platform.BINARY_SENSOR, Platform.EVENT, Platform.SENSOR, Platform.SWITCH]
 
 
 def is_read_only(entry: ConfigEntry) -> bool:
@@ -81,6 +82,8 @@ async def async_setup_entry(hass: HomeAssistant, entry: CozifyConfigEntry) -> bo
     coordinator = CozifyCoordinator(hass, entry, client)
     await coordinator.async_config_entry_first_refresh()
     entry.runtime_data = coordinator
+    # Remember what was loaded: the mode may have changed by the time we unload.
+    coordinator.loaded_platforms = platforms_for(entry)
 
     # Register the hub device so child devices can reference it.
     from homeassistant.helpers import device_registry as dr
@@ -89,7 +92,7 @@ async def async_setup_entry(hass: HomeAssistant, entry: CozifyConfigEntry) -> bo
 
     dr.async_get(hass).async_get_or_create(config_entry_id=entry.entry_id, **hub_device_info(coordinator))
 
-    await hass.config_entries.async_forward_entry_setups(entry, platforms_for(entry))
+    await hass.config_entries.async_forward_entry_setups(entry, coordinator.loaded_platforms)
     entry.async_on_unload(entry.add_update_listener(_options_updated))
     return True
 
@@ -99,4 +102,4 @@ async def _options_updated(hass: HomeAssistant, entry: CozifyConfigEntry) -> Non
 
 
 async def async_unload_entry(hass: HomeAssistant, entry: CozifyConfigEntry) -> bool:
-    return await hass.config_entries.async_unload_platforms(entry, platforms_for(entry))
+    return await hass.config_entries.async_unload_platforms(entry, entry.runtime_data.loaded_platforms)

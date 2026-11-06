@@ -62,7 +62,11 @@ async def test_guard_in_real_transport(hass, aioclient_mock):
 
 
 async def test_no_controllable_entities(hass, ro_setup):
-    assert _domains(hass) <= {"sensor", "binary_sensor", "event"}
+    assert _domains(hass) <= {"sensor", "binary_sensor", "event", "switch"}
+    # the only switch is the read-only toggle itself
+    reg = er.async_get(hass)
+    switches = [e for e in reg.entities.values() if e.platform == DOMAIN and e.domain == "switch"]
+    assert [e.unique_id for e in switches] == [f"{HUB_ID}_read_only"]
     assert _find(hass, "binary_sensor", f"{SOCKET}_power")
     assert _find(hass, "binary_sensor", f"{LIGHT}_power")
     assert _find(hass, "binary_sensor", f"rule_state_{RULE}")
@@ -128,4 +132,25 @@ async def test_access_mode_sensor(hass, ro_setup):
 
 
 async def test_access_mode_sensor_full(hass, setup):
+    assert hass.states.get(_find(hass, "sensor", "access_mode")).state == "full"
+
+
+async def test_toggle_from_full_to_read_only_and_back(hass, entry, fake_hub):
+    assert await hass.config_entries.async_setup(entry.entry_id)
+    await hass.async_block_till_done()
+    toggle = _find(hass, "switch", "read_only")
+    assert hass.states.get(toggle).state == "off"
+    assert _find(hass, "light", f"{LIGHT}_light")
+    await hass.services.async_call("switch", "turn_on", {"entity_id": toggle}, blocking=True)
+    await hass.async_block_till_done()
+    assert entry.options["read_only"] is True
+    assert hass.states.get(toggle).state == "on"
+    assert hass.states.get(_find(hass, "sensor", "access_mode")).state == "read_only"
+    assert hass.states.get(_find(hass, "light", f"{LIGHT}_light")).state == "unavailable"
+    assert not [c for c in fake_hub["hub"].calls if c[0] in WRITES]
+    # and back to full control
+    await hass.services.async_call("switch", "turn_off", {"entity_id": toggle}, blocking=True)
+    await hass.async_block_till_done()
+    assert entry.options["read_only"] is False
+    assert hass.states.get(_find(hass, "light", f"{LIGHT}_light")).state in ("on", "off")
     assert hass.states.get(_find(hass, "sensor", "access_mode")).state == "full"

@@ -74,6 +74,7 @@ class CozifyCoordinator(DataUpdateCoordinator[dict[str, Any]]):
         self._known_devices: set[str] = set()
         self._last_alert: dict[str, int] = {}
         self._meta_checked = 0.0
+        self.loaded_platforms: list = []
         self.hub_meta: dict[str, Any] = {}
 
     # -- polling -----------------------------------------------------------
