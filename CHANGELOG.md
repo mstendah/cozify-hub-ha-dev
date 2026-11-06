@@ -9,6 +9,7 @@
   available as sensors: a **Power** binary sensor for switches/sockets/lights, a **Rule: <name>** binary
   sensor per hub rule and a **Target temperature** sensor for thermostats. Existing entries keep full control
   until the option is turned on; new setups default to read-only (shown as an extra step).
+* An **Access mode** diagnostic sensor (`read_only` / `full`) lets dashboards adapt to the setting.
 * Switching mode reloads the entry. Controllable entities of the other mode become unavailable in the entity
   registry and can be deleted there; dashboards need to point at the new sensor entities.
 

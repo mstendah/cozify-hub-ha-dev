@@ -114,7 +114,8 @@ async def async_setup_entry(
 
     setup_device_platform(hass, entry, async_add_entities, build)
     async_add_entities(
-        [HubConnectionSensor(coordinator), HubVersionSensor(coordinator), HubSpecSensor(coordinator)]
+        [HubConnectionSensor(coordinator), HubVersionSensor(coordinator), HubSpecSensor(coordinator),
+         HubModeSensor(coordinator, read_only)]
     )
 
 
@@ -130,6 +131,23 @@ class HubConnectionSensor(CozifyHubEntity, SensorEntity):
     @property
     def native_value(self) -> str:
         return "local" if self.coordinator.client.is_local else "cloud"
+
+
+class HubModeSensor(CozifyHubEntity, SensorEntity):
+    """Whether this hub is read-only. Lets dashboards adapt to the access mode."""
+
+    _attr_name = "Access mode"
+    _attr_device_class = SensorDeviceClass.ENUM
+    _attr_options = ["read_only", "full"]
+    _attr_entity_category = EntityCategory.DIAGNOSTIC
+
+    def __init__(self, coordinator: CozifyCoordinator, read_only: bool) -> None:
+        super().__init__(coordinator, "access_mode")
+        self._read_only = read_only
+
+    @property
+    def native_value(self) -> str:
+        return "read_only" if self._read_only else "full"
 
 
 class HubVersionSensor(CozifyHubEntity, SensorEntity):

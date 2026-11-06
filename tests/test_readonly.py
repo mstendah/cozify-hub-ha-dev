@@ -121,3 +121,11 @@ async def test_setup_flow_offers_read_only(hass):
         r = await hass.config_entries.flow.async_configure(r["flow_id"], {"read_only": True})
         assert r["type"] == FlowResultType.CREATE_ENTRY
         assert r["options"] == {"read_only": True}
+
+
+async def test_access_mode_sensor(hass, ro_setup):
+    assert hass.states.get(_find(hass, "sensor", "access_mode")).state == "read_only"
+
+
+async def test_access_mode_sensor_full(hass, setup):
+    assert hass.states.get(_find(hass, "sensor", "access_mode")).state == "full"
