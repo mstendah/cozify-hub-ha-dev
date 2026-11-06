@@ -12,6 +12,7 @@ from . import spec
 from .coordinator import CozifyCoordinator
 from .entity import CozifyEntity, setup_device_platform
 from .entity_defs import CONTROL_CAPABILITIES, CURATED_ATTRS, CURATED_BINARY, BinaryDef
+from .readonly import PowerBinarySensor, add_rule_mirrors, has_power
 from .sensor import _humanize
 
 
@@ -68,7 +69,16 @@ def _defs_for(coordinator: CozifyCoordinator, device_id: str) -> list[BinaryDef]
 async def async_setup_entry(
     hass: HomeAssistant, entry: ConfigEntry, async_add_entities: AddEntitiesCallback
 ) -> None:
-    setup_device_platform(
-        hass, entry, async_add_entities,
-        lambda c, dev_id: [CozifyBinarySensor(c, dev_id, d) for d in _defs_for(c, dev_id)],
-    )
+    from . import is_read_only
+
+    read_only = is_read_only(entry)
+
+    def build(c: CozifyCoordinator, dev_id: str) -> list:
+        ents: list = [CozifyBinarySensor(c, dev_id, d) for d in _defs_for(c, dev_id)]
+        if read_only and has_power(c.capabilities(dev_id)):
+            ents.append(PowerBinarySensor(c, dev_id))
+        return ents
+
+    setup_device_platform(hass, entry, async_add_entities, build)
+    if read_only:
+        add_rule_mirrors(entry, entry.runtime_data, async_add_entities)

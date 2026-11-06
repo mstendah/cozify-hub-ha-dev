@@ -35,6 +35,7 @@ from .const import (
     CONF_HUB_KEY,
     CONF_HUB_NAME,
     CONF_PREFER_LOCAL,
+    CONF_READ_ONLY,
     DOMAIN,
 )
 
@@ -49,6 +50,7 @@ class CozifyHubConfigFlow(ConfigFlow, domain=DOMAIN):
         self._token: str | None = None
         self._hubs: dict[str, str] = {}
         self._reauth_entry = None
+        self._hub_id: str | None = None
 
     # -- login ---------------------------------------------------------------
     async def async_step_user(self, user_input: dict[str, Any] | None = None) -> ConfigFlowResult:
@@ -112,12 +114,14 @@ class CozifyHubConfigFlow(ConfigFlow, domain=DOMAIN):
         if not self._hubs:
             return self.async_abort(reason="no_hubs")
         if len(self._hubs) == 1:
-            return await self._create_for(next(iter(self._hubs)))
+            self._hub_id = next(iter(self._hubs))
+            return await self.async_step_mode()
         return await self.async_step_hub()
 
     async def async_step_hub(self, user_input: dict[str, Any] | None = None) -> ConfigFlowResult:
         if user_input is not None:
-            return await self._create_for(user_input[CONF_HUB_ID])
+            self._hub_id = user_input[CONF_HUB_ID]
+            return await self.async_step_mode()
         options = {
             hub_id: jwt_payload(key).get("hub_name") or hub_id for hub_id, key in self._hubs.items()
         }
@@ -125,7 +129,17 @@ class CozifyHubConfigFlow(ConfigFlow, domain=DOMAIN):
             step_id="hub", data_schema=vol.Schema({vol.Required(CONF_HUB_ID): vol.In(options)})
         )
 
-    async def _create_for(self, hub_id: str) -> ConfigFlowResult:
+    async def async_step_mode(self, user_input: dict[str, Any] | None = None) -> ConfigFlowResult:
+        """Choose read-only (default, safest) or full control."""
+        assert self._hub_id
+        if user_input is not None:
+            return await self._create_for(self._hub_id, read_only=user_input[CONF_READ_ONLY])
+        return self.async_show_form(
+            step_id="mode",
+            data_schema=vol.Schema({vol.Required(CONF_READ_ONLY, default=True): bool}),
+        )
+
+    async def _create_for(self, hub_id: str, read_only: bool = False) -> ConfigFlowResult:
         assert self._token
         await self.async_set_unique_id(hub_id)
         self._abort_if_unique_id_configured()
@@ -158,6 +172,7 @@ class CozifyHubConfigFlow(ConfigFlow, domain=DOMAIN):
                 CONF_HOST: host,
                 CONF_CLIENT_ID: f"ha-{uuid.uuid4()}",
             },
+            options={CONF_READ_ONLY: read_only},
         )
 
     # -- reauth ----------------------------------------------------------------
@@ -199,7 +214,11 @@ class CozifyOptionsFlow(OptionsFlow):
         if user_input is not None:
             host = (user_input.get(CONF_HOST) or "").strip() or None
             return self.async_create_entry(
-                data={CONF_HOST: host, CONF_PREFER_LOCAL: user_input[CONF_PREFER_LOCAL]}
+                data={
+                    CONF_HOST: host,
+                    CONF_PREFER_LOCAL: user_input[CONF_PREFER_LOCAL],
+                    CONF_READ_ONLY: user_input[CONF_READ_ONLY],
+                }
             )
         opts = self.config_entry.options
         data = self.config_entry.data
@@ -211,6 +230,9 @@ class CozifyOptionsFlow(OptionsFlow):
                         CONF_HOST, default=opts.get(CONF_HOST) or data.get(CONF_HOST) or ""
                     ): str,
                     vol.Required(CONF_PREFER_LOCAL, default=opts.get(CONF_PREFER_LOCAL, True)): bool,
+                    vol.Required(
+                        CONF_READ_ONLY, default=opts.get(CONF_READ_ONLY, data.get(CONF_READ_ONLY, False))
+                    ): bool,
                 }
             ),
         )

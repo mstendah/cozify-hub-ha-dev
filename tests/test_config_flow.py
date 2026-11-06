@@ -39,6 +39,8 @@ async def test_full_flow(hass):
         r = await hass.config_entries.flow.async_configure(r["flow_id"], {CONF_EMAIL: "A@Example.com"})
         assert r["step_id"] == "code"
         r = await hass.config_entries.flow.async_configure(r["flow_id"], {"code": "123456"})
+        assert r["step_id"] == "mode"
+        r = await hass.config_entries.flow.async_configure(r["flow_id"], {"read_only": False})
         assert r["type"] == FlowResultType.CREATE_ENTRY
         assert r["title"] == "Office Hub"
         assert r["data"][CONF_HUB_ID] == HUB_ID and r["data"]["host"] == "192.0.2.5"
@@ -74,12 +76,14 @@ async def test_existing_token_skips_code(hass):
             r = await hass.config_entries.flow.async_init(DOMAIN, context={"source": SOURCE_USER})
             r = await hass.config_entries.flow.async_configure(r["flow_id"], {CONF_EMAIL: "a@b.c"})
             cloud.request_login_code.assert_not_awaited()
+            assert r["step_id"] == "mode"
+            r = await hass.config_entries.flow.async_configure(r["flow_id"], {"read_only": True})
             assert r["type"] == FlowResultType.CREATE_ENTRY and r["data"][CONF_HUB_ID] == HUB_ID
 
 
 async def test_options_flow(hass, entry, fake_hub):
     assert await hass.config_entries.async_setup(entry.entry_id)
     r = await hass.config_entries.options.async_init(entry.entry_id)
-    r = await hass.config_entries.options.async_configure(r["flow_id"], {"host": " 192.0.2.99 ", "prefer_local": False})
+    r = await hass.config_entries.options.async_configure(r["flow_id"], {"host": " 192.0.2.99 ", "prefer_local": False, "read_only": True})
     assert r["type"] == FlowResultType.CREATE_ENTRY
-    assert entry.options == {"host": "192.0.2.99", "prefer_local": False}
+    assert entry.options == {"host": "192.0.2.99", "prefer_local": False, "read_only": True}

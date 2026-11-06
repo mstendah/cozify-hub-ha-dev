@@ -28,6 +28,14 @@ class CozifyError(Exception):
     """Base error."""
 
 
+class ReadOnlyError(CozifyError):
+    """A write was attempted while the hub is configured as read-only."""
+
+
+# Requests that do not change anything on the hub even though they are not GETs.
+READ_ONLY_SAFE = {("POST", "/rules/proposals")}
+
+
 class AuthError(CozifyError):
     """Credentials rejected (401/403)."""
 
@@ -154,8 +162,10 @@ class HubClient:
         host: str | None = None,
         prefer_local: bool = True,
         client_id: str = "home-assistant",
+        read_only: bool = False,
     ) -> None:
         self._session = session
+        self.read_only = read_only
         self.hub_id = hub_id
         self.hub_key = hub_key
         self.cloud_token = cloud_token
@@ -209,10 +219,18 @@ class HubClient:
     def _remote_url(self, path: str) -> str:
         return f"{self.cloud_base}/hub/remote/cc/{self.api_prefix}{path}"
 
+    def _guard(self, method: str, path: str) -> None:
+        """Single choke point: in read-only mode only reads leave this client."""
+        if self.read_only and method.upper() != "GET" and (method.upper(), path) not in READ_ONLY_SAFE:
+            raise ReadOnlyError(
+                f"{method.upper()} {path} blocked: this hub is configured as read-only"
+            )
+
     async def call(
         self, method: str, path: str, *, json_body: Any = None, params: dict | None = None
     ) -> Any:
         """Call any documented hub endpoint (path relative to ``/cc/<ver>``)."""
+        self._guard(method, path)
         for attempt in (0, 1):
             try:
                 return await self._call_once(method, path, json_body, params)
@@ -224,6 +242,7 @@ class HubClient:
         raise CozifyError("unreachable")  # pragma: no cover
 
     async def _call_once(self, method: str, path: str, json_body: Any, params: dict | None) -> Any:
+        self._guard(method, path)
         use_local = bool(self.host) and self.prefer_local and time.monotonic() >= self._local_fail_until
         if use_local:
             try:

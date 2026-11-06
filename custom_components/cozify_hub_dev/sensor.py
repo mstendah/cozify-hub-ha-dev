@@ -101,10 +101,18 @@ async def async_setup_entry(
     hass: HomeAssistant, entry: ConfigEntry, async_add_entities: AddEntitiesCallback
 ) -> None:
     coordinator: CozifyCoordinator = entry.runtime_data
-    setup_device_platform(
-        hass, entry, async_add_entities,
-        lambda c, dev_id: [CozifySensor(c, dev_id, d) for d in _sensor_defs_for(c, dev_id)],
-    )
+    from . import is_read_only
+    from .readonly import SetpointSensor, has_setpoint
+
+    read_only = is_read_only(entry)
+
+    def build(c: CozifyCoordinator, dev_id: str) -> list:
+        ents: list = [CozifySensor(c, dev_id, d) for d in _sensor_defs_for(c, dev_id)]
+        if read_only and has_setpoint(c.capabilities(dev_id)):
+            ents.append(SetpointSensor(c, dev_id))
+        return ents
+
+    setup_device_platform(hass, entry, async_add_entities, build)
     async_add_entities(
         [HubConnectionSensor(coordinator), HubVersionSensor(coordinator), HubSpecSensor(coordinator)]
     )

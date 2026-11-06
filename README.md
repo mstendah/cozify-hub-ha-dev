@@ -35,6 +35,14 @@ Several hubs on one account: add the integration again - the existing login is r
 
 > Cloud relay access needs the remote-access feature on the hub (HTTP 402 otherwise). Local access does not.
 
+## Read-only mode
+
+During setup you choose between read-only (the default for new hubs) and full control; you can change it later
+under *Configure* on the integration. In read-only mode every write to the hub is blocked inside the API client,
+and no switches, lights, thermostats or scenes are created. Instead you get **Power** and **Target
+temperature** sensors and a **Rule: ...** binary sensor per rule, so dashboards and automations can still read
+everything. Reads, rule logs and rule proposals keep working.
+
 ## Entities
 
 | Cozify capability | Home Assistant |

@@ -1,5 +1,17 @@
 # Changelog
 
+## 0.2.0 - dev channel
+* **Read-only mode.** A hub can now be set up (or switched in the integration options) as read-only so nothing
+  can ever be written to it. It is enforced in the API client itself: every request that is not a `GET` is
+  refused with `ReadOnlyError` (the one exception is the read-only `POST /rules/proposals` query), so
+  services, automations and raw `send_command` calls are blocked too.
+* In read-only mode the light, switch, climate and scene platforms are not loaded at all. Their state stays
+  available as sensors: a **Power** binary sensor for switches/sockets/lights, a **Rule: <name>** binary
+  sensor per hub rule and a **Target temperature** sensor for thermostats. Existing entries keep full control
+  until the option is turned on; new setups default to read-only (shown as an extra step).
+* Switching mode reloads the entry. Controllable entities of the other mode become unavailable in the entity
+  registry and can be deleted there; dashboards need to point at the new sensor entities.
+
 ## 0.1.1 - dev channel
 * **Separated from the production integration.** This repository is the development channel: the
   integration domain is now `cozify_hub_dev` and the folder is `custom_components/cozify_hub_dev`, so it

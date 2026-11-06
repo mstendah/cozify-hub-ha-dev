@@ -21,6 +21,13 @@
           "hub_id": "Hub"
         }
       },
+      "mode": {
+        "title": "Access mode",
+        "description": "Read-only mirrors the hub into Home Assistant but never writes anything to it: no switches, lights, thermostats or scenes are created and every write is blocked. You can change this later in the integration options.",
+        "data": {
+          "read_only": "Read-only (recommended)"
+        }
+      },
       "reauth_confirm": {
         "title": "Sign in again",
         "description": "The Cozify credentials for {email} expired. A new one-time code will be sent."
@@ -47,7 +54,8 @@
         "description": "Home Assistant uses the local network when the hub is reachable and falls back to the Cozify cloud relay.",
         "data": {
           "host": "Hub IP address / hostname (optional)",
-          "prefer_local": "Prefer local connection"
+          "prefer_local": "Prefer local connection",
+          "read_only": "Read-only (never write to the hub; controllable entities are replaced by sensors)"
         }
       }
     }

@@ -62,6 +62,7 @@ class FakeHub(HubClient):
         return {"hubId": self.hub_id, "name": "Test Hub", "version": "1.14.12.20", "features": [2]}
 
     async def call(self, method: str, path: str, *, json_body: Any = None, params: dict | None = None) -> Any:
+        self._guard(method, path)
         self.calls.append((method, path, json_body, params))
         if path == "/hub/poll":
             polls = []
@@ -123,6 +124,7 @@ def fake_hub():
         hub = FakeHub(
             None, hub_id=entry.data[CONF_HUB_ID], hub_key="k", cloud_token="t",
             cloud_base=entry.data.get(CONF_CLOUD_BASE, ""), host=entry.data.get(CONF_HOST),
+            read_only=bool(entry.options.get("read_only", False)),
         )
         holder["hub"] = hub
         return hub
@@ -145,5 +147,23 @@ def entry(hass) -> MockConfigEntry:
 @pytest.fixture
 async def setup(hass, entry, fake_hub):
     assert await hass.config_entries.async_setup(entry.entry_id)
+    await hass.async_block_till_done()
+    return fake_hub["hub"]
+
+
+@pytest.fixture
+def ro_entry(hass) -> MockConfigEntry:
+    e = MockConfigEntry(
+        domain=DOMAIN, unique_id=HUB_ID, title="Test Hub", options={"read_only": True},
+        data={CONF_EMAIL: "a@example.com", CONF_CLOUD_TOKEN: "t", CONF_CLOUD_BASE: "https://x/ui/0.2",
+              CONF_HUB_ID: HUB_ID, CONF_HUB_KEY: "k", CONF_HOST: "192.0.2.10"},
+    )
+    e.add_to_hass(hass)
+    return e
+
+
+@pytest.fixture
+async def ro_setup(hass, ro_entry, fake_hub):
+    assert await hass.config_entries.async_setup(ro_entry.entry_id)
     await hass.async_block_till_done()
     return fake_hub["hub"]

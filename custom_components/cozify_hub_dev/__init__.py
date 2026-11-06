@@ -21,6 +21,7 @@ from .const import (
     CONF_HUB_ID,
     CONF_HUB_KEY,
     CONF_PREFER_LOCAL,
+    CONF_READ_ONLY,
     DOMAIN,  # noqa: F401
 )
 from .coordinator import CozifyCoordinator
@@ -37,6 +38,17 @@ PLATFORMS = [
     Platform.SENSOR,
     Platform.SWITCH,
 ]
+# Read-only hubs get no controllable entities at all: states are mirrored as
+# sensors / binary sensors, so nothing in the UI can write to the hub.
+READ_ONLY_PLATFORMS = [Platform.BINARY_SENSOR, Platform.EVENT, Platform.SENSOR]
+
+
+def is_read_only(entry: ConfigEntry) -> bool:
+    return bool(entry.options.get(CONF_READ_ONLY, entry.data.get(CONF_READ_ONLY, False)))
+
+
+def platforms_for(entry: ConfigEntry) -> list[Platform]:
+    return READ_ONLY_PLATFORMS if is_read_only(entry) else PLATFORMS
 
 type CozifyConfigEntry = ConfigEntry[CozifyCoordinator]
 
@@ -56,6 +68,7 @@ def build_client(hass: HomeAssistant, entry: ConfigEntry) -> HubClient:
         cloud_base=data.get(CONF_CLOUD_BASE, CLOUD_BASES[0]),
         host=entry.options.get(CONF_HOST) or data.get(CONF_HOST),
         prefer_local=entry.options.get(CONF_PREFER_LOCAL, True),
+        read_only=is_read_only(entry),
         client_id=data.get(CONF_CLIENT_ID) or f"ha-{uuid.uuid4()}",
     )
 
@@ -73,7 +86,7 @@ async def async_setup_entry(hass: HomeAssistant, entry: CozifyConfigEntry) -> bo
 
     dr.async_get(hass).async_get_or_create(config_entry_id=entry.entry_id, **hub_device_info(coordinator))
 
-    await hass.config_entries.async_forward_entry_setups(entry, PLATFORMS)
+    await hass.config_entries.async_forward_entry_setups(entry, platforms_for(entry))
     entry.async_on_unload(entry.add_update_listener(_options_updated))
     return True
 
@@ -83,4 +96,4 @@ async def _options_updated(hass: HomeAssistant, entry: CozifyConfigEntry) -> Non
 
 
 async def async_unload_entry(hass: HomeAssistant, entry: CozifyConfigEntry) -> bool:
-    return await hass.config_entries.async_unload_platforms(entry, PLATFORMS)
+    return await hass.config_entries.async_unload_platforms(entry, platforms_for(entry))

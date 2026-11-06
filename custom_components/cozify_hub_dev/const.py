@@ -16,6 +16,8 @@ CONF_CLIENT_ID = "client_id"
 
 # Options
 CONF_PREFER_LOCAL = "prefer_local"
+# Read-only mode: nothing is ever written to the hub (set at setup, changeable in options).
+CONF_READ_ONLY = "read_only"
 
 # Cloud endpoints. Hubs running 1.14.9.* use api.cozify.fi, 1.14.15+ use
 # cloudapi.cozify.io. Both expose identical paths.
