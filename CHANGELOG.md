@@ -11,7 +11,10 @@
   until the option is turned on; new setups default to read-only (shown as an extra step).
 * An **Access mode** diagnostic sensor (`read_only` / `full`) lets dashboards adapt to the setting.
 * Switching mode reloads the entry. Controllable entities of the other mode become unavailable in the entity
-  registry and can be deleted there; dashboards need to point at the new sensor entities.
+  registry and can be deleted there. README now has an entity mapping table and an example of a dashboard
+  that works in both modes (`conditional` rows).
+* Tests: 60 (new `test_readonly.py` covers the request guard, the real transport, services, entity set,
+  the setup flow and the access-mode sensor).
 
 ## 0.1.1 - dev channel
 * **Separated from the production integration.** This repository is the development channel: the

@@ -43,18 +43,48 @@ and no switches, lights, thermostats or scenes are created. Instead you get **Po
 temperature** sensors and a **Rule: ...** binary sensor per rule, so dashboards and automations can still read
 everything. Reads, rule logs and rule proposals keep working.
 
+| Full control | Read-only |
+| --- | --- |
+| `switch.<device>` (sockets, relays), `light.<device>` | `binary_sensor.<device>_power` |
+| `switch.<hub>_rule_<name>` | `binary_sensor.<hub>_rule_<name>` |
+| `climate.<device>` | `sensor.<device>_target_temperature` (current temperature and heating demand are sensors in both modes) |
+| `scene.<hub>_<name>` | not created |
+
+The diagnostic sensor `sensor.<hub>_access_mode` reports `read_only` or `full`. Existing entries keep full
+control until you turn the option on. Switching mode reloads the integration; entities of the other mode become
+unavailable and can be removed from the entity registry.
+
+### Dashboards that work in both modes
+
+Sensors keep the same ids in both modes, so use them directly. For things that change domain (rules, sockets),
+list both variants in `conditional` rows; the one that does not exist stays hidden:
+
+```yaml
+type: conditional
+conditions:
+  - {condition: state, entity: switch.hub_rule_device_monitor, state: [on, off]}
+row: {type: simple-entity, entity: switch.hub_rule_device_monitor, name: Device monitor}
+---
+type: conditional
+conditions:
+  - {condition: state, entity: binary_sensor.hub_rule_device_monitor, state: [on, off]}
+row: {type: simple-entity, entity: binary_sensor.hub_rule_device_monitor, name: Device monitor}
+```
+
+(Use `simple-entity` rather than the default entity row so a switch is shown as a value, never as a toggle.)
+
 ## Entities
 
 | Cozify capability | Home Assistant |
 | --- | --- |
 | `CONTROL_LIGHT` (+ `COLOR_HS`, `COLOR_TEMP`, `BRIGHTNESS`, `TRANSITION`) | `light` |
-| `ON_OFF` (sockets, relays) | `switch` |
-| `CONTROL_TEMPERATURE` | `climate` (heat, target temperature) |
+| `ON_OFF` (sockets, relays) | `switch` (`binary_sensor` Power in read-only mode) |
+| `CONTROL_TEMPERATURE` | `climate` (heat, target temperature); `sensor` target temperature in read-only mode |
 | `TEMPERATURE`, `HUMIDITY`, `CO2`, `PRESSURE`, `LUX`, power/energy/current/phase values, battery | `sensor` |
 | `MOTION`, `CONTACT`, `MOISTURE`, `SMOKE`, `TWILIGHT`, `SIREN`, battery low, reachable | `binary_sensor` |
 | `GENERATE_ALERT` (doorbells) | `event` + bus event `cozify_hub_dev_event` |
-| Hub scenes | `scene` |
-| Hub rules | `switch` ("Rule: ...") |
+| Hub scenes | `scene` (not created in read-only mode) |
+| Hub rules | `switch` ("Rule: ..."), or `binary_sensor` in read-only mode |
 | Everything else the docs define | disabled, diagnostic generic `sensor`/`binary_sensor` (enable what you need) |
 
 Not yet supported (shown in diagnostics): aircon, shutters/covers, cameras, speakers/media. They need
