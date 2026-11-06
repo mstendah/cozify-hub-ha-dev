@@ -1,0 +1,2280 @@
+{
+ "capabilities": {
+  "ACTIVE_CURRENT": {
+   "attributes": [
+    {
+     "description": "",
+     "path": "state.activeCurrent",
+     "type": "float",
+     "unit": "A",
+     "writable": false
+    }
+   ],
+   "description": "Device can report electric current consumption in amperes"
+  },
+  "ACTIVE_POWER": {
+   "attributes": [
+    {
+     "description": "",
+     "path": "state.activePower",
+     "type": "float",
+     "unit": "Watts",
+     "writable": false
+    }
+   ],
+   "description": "Device can report current power consumption"
+  },
+  "AIRCON": {
+   "attributes": [
+    {
+     "description": "",
+     "path": "state.mode",
+     "type": null,
+     "values": {
+      "auto": "Automatic mode",
+      "cool": "Cooling mode",
+      "dry": "Dry mode",
+      "heat": "Heating mode",
+      "lowheat": "Low-heat mode"
+     },
+     "writable": true
+    },
+    {
+     "description": "",
+     "path": "state.fan",
+     "type": null,
+     "values": {
+      "auto": "Automatic fan speed",
+      "max": "Maximum fan speed",
+      "min": "Minimum fan speed",
+      "norm": "Normal fan speed"
+     },
+     "writable": true
+    },
+    {
+     "description": "",
+     "path": "state.hswing",
+     "type": "boolean",
+     "writable": true
+    },
+    {
+     "description": "",
+     "path": "state.lastCommand",
+     "type": "timestampms",
+     "writable": false
+    },
+    {
+     "description": "List of supported operating capability profiles for this aircon model. Use these profiles to constrain the values offered for state.mode, state.fan, state.hswing, and state.targetTemp instead of assuming that every aircon supports every option. Most devices return a single profile, but the field is a list. See AirpatrolCapability below.",
+     "path": "mode_capabilities",
+     "type": "List",
+     "unit": "of  objects",
+     "writable": false
+    }
+   ],
+   "description": "Device is an aircon"
+  },
+  "ALERT": {
+   "attributes": [],
+   "description": "Device supports indicating some form of alert"
+  },
+  "ANALOG_VALUE": {
+   "attributes": [
+    {
+     "description": "",
+     "path": "state.value",
+     "type": null,
+     "writable": false
+    }
+   ],
+   "description": "Device represents an analog value. E.g. temperature set point as Bacnet analog value"
+  },
+  "BACNET": {
+   "attributes": [],
+   "description": "Remote Bacnet device"
+  },
+  "BASS": {
+   "attributes": [
+    {
+     "description": "",
+     "path": "state.rcData.bass",
+     "range": "0, 10",
+     "type": "int",
+     "writable": true
+    }
+   ],
+   "description": "Device supports Bass"
+  },
+  "BATTERY_C": {
+   "attributes": [
+    {
+     "description": "",
+     "path": "state.chargingStatus",
+     "type": "int",
+     "values": {
+      "0": "Idle",
+      "1": "Charging",
+      "2": "Full"
+     },
+     "writable": false
+    },
+    {
+     "description": "",
+     "path": "state.chargingStatusAt",
+     "type": "timestampms",
+     "writable": false
+    }
+   ],
+   "description": "Device can monitor own battery charging"
+  },
+  "BATTERY_U": {
+   "attributes": [
+    {
+     "description": "",
+     "path": "state.batteryLow",
+     "type": "boolean",
+     "writable": false
+    },
+    {
+     "description": "",
+     "path": "state.batteryV",
+     "type": "float",
+     "unit": "Volt",
+     "writable": false
+    }
+   ],
+   "description": "Device can monitor own battery voltage"
+  },
+  "BRIGHTNESS": {
+   "attributes": [
+    {
+     "description": "",
+     "path": "state.brightness",
+     "range": "0.0, 1.0",
+     "type": "float",
+     "writable": true
+    }
+   ],
+   "description": "Device can handle brightness"
+  },
+  "CLEAR_ALERT": {
+   "attributes": [],
+   "description": "Device can clear alert e.g. alert is not canceled automatically by the device (or stuck)"
+  },
+  "CO": {
+   "attributes": [
+    {
+     "description": "",
+     "path": "state.coDetected",
+     "type": "boolean",
+     "writable": false
+    },
+    {
+     "description": "",
+     "path": "state.coAt",
+     "type": "timestampms",
+     "writable": false
+    },
+    {
+     "description": "",
+     "path": "state.coStartAt",
+     "type": "timestampms",
+     "writable": false
+    }
+   ],
+   "description": "Capability to detect carbon monoxide"
+  },
+  "CO2": {
+   "attributes": [
+    {
+     "description": "",
+     "path": "state.co2Ppm",
+     "type": "int",
+     "writable": false
+    }
+   ],
+   "description": "Capability to detect CO2 concentration levels"
+  },
+  "COLOR_HS": {
+   "attributes": [
+    {
+     "description": "",
+     "path": "state.hue",
+     "range": "0.0, 2*pi",
+     "type": "float",
+     "writable": true
+    },
+    {
+     "description": "",
+     "path": "state.saturation",
+     "range": "0.0, 1.0",
+     "type": "float",
+     "writable": true
+    }
+   ],
+   "description": "Device uses Hue and Saturation for handling color"
+  },
+  "COLOR_LOOP": {
+   "attributes": [],
+   "description": "Device supports color loop"
+  },
+  "COLOR_RGB": {
+   "attributes": [],
+   "description": "[NOT INUSE?] Device uses RGB for handling color"
+  },
+  "COLOR_TEMP": {
+   "attributes": [
+    {
+     "description": "",
+     "path": "state.temperature",
+     "range": "0, 1000000",
+     "type": "int",
+     "writable": true
+    }
+   ],
+   "description": "Device can handle color temperature"
+  },
+  "COLOR_XY": {
+   "attributes": [],
+   "description": "[NOT INUSE?] Device uses X/Y for handling color"
+  },
+  "CONFIGURABLE": {
+   "attributes": [
+    {
+     "description": "",
+     "path": "Get and set via hub command api .../devices/configuration",
+     "type": "DeviceConfiguration",
+     "writable": false
+    }
+   ],
+   "description": "This capability means that there is device specific configuration dict available"
+  },
+  "CONTACT": {
+   "attributes": [
+    {
+     "description": "",
+     "path": "state.open",
+     "type": "boolean",
+     "writable": false
+    },
+    {
+     "description": "",
+     "path": "state.lastChange",
+     "type": "timestampms",
+     "writable": false
+    }
+   ],
+   "description": "Device detects contact"
+  },
+  "CONTROL_LIGHT": {
+   "attributes": [],
+   "description": "Device can control light (lamp)"
+  },
+  "CONTROL_MODE": {
+   "attributes": [
+    {
+     "description": "",
+     "path": "state.mode",
+     "type": null,
+     "values": {
+      "0": "Off",
+      "1": "Auto",
+      "2": "Heating",
+      "3": "Cooling"
+     },
+     "writable": false
+    },
+    {
+     "description": "",
+     "path": "modes",
+     "type": null,
+     "writable": false
+    }
+   ],
+   "description": ""
+  },
+  "CONTROL_POWER": {
+   "attributes": [],
+   "description": "Device can control power"
+  },
+  "CONTROL_PRESET": {
+   "attributes": [
+    {
+     "description": "",
+     "path": "state.preset",
+     "type": null,
+     "values": {
+      "0": "Comfort",
+      "1": "Eco",
+      "2": "Fireplace"
+     },
+     "writable": false
+    },
+    {
+     "description": "",
+     "path": "presets",
+     "type": null,
+     "writable": false
+    }
+   ],
+   "description": ""
+  },
+  "CONTROL_TEMPERATURE": {
+   "attributes": [
+    {
+     "description": "",
+     "path": "state.targetTemp",
+     "type": "float",
+     "unit": "Celsius",
+     "writable": true
+    },
+    {
+     "description": "How much of the maximum heating power is in use",
+     "path": "state.heatingDemand",
+     "range": "0.0, 1.0",
+     "type": "float",
+     "writable": false
+    }
+   ],
+   "description": "Device can control temperature"
+  },
+  "DETERIORATION": {
+   "attributes": [
+    {
+     "description": "",
+     "path": "state.deterioration",
+     "type": "boolean",
+     "writable": false
+    }
+   ],
+   "description": "Capability for detecting deterioration in person's condition, healthcare, e.g. watch"
+  },
+  "DEVICE": {
+   "attributes": [
+    {
+     "description": "",
+     "path": "state.lastSeen",
+     "type": "timestampms",
+     "writable": false
+    },
+    {
+     "description": "All devices have this boolean flagg indicating wether the device is currently connected with the gateway device (like the Hub). Accuracy of the information depends on the protocol, e.g. a 433 switch is always reported as reachable because there is no way of telling if the device can hear commands or not. On the other hand if a USB speaker is removed from the Hub, that is detected immediately and reachable flagg is updated near real time.",
+     "path": "state.reachable",
+     "type": "boolean",
+     "writable": false
+    }
+   ],
+   "description": "Any device, used as an marker"
+  },
+  "DEVICE_HEALTH": {
+   "attributes": [
+    {
+     "description": "",
+     "path": "event.alarm (note, not in state!)",
+     "type": "DeviceAlarm",
+     "writable": false
+    }
+   ],
+   "description": "Capability for reporting device health. E.g. reset/button stuck"
+  },
+  "DIMMER": {
+   "attributes": [
+    {
+     "description": "",
+     "path": "state.step",
+     "range": "0.0, 1.0",
+     "type": "float",
+     "writable": false
+    },
+    {
+     "description": "",
+     "path": "state.onoff",
+     "type": "boolean",
+     "writable": false
+    },
+    {
+     "description": "",
+     "path": "state.transitionMsec",
+     "type": "int",
+     "writable": false
+    }
+   ],
+   "description": "Device controls dim level, a bit like remote control but might have no buttons"
+  },
+  "EXT_THERMOMETER": {
+   "attributes": [
+    {
+     "description": "",
+     "path": "thermometer",
+     "type": "device",
+     "unit": "id of external thermometer",
+     "writable": false
+    }
+   ],
+   "description": "Capability meaning that the device needs an external temperature meter"
+  },
+  "FAN_MODE": {
+   "attributes": [
+    {
+     "description": "",
+     "path": "state.fanMode",
+     "type": null,
+     "values": {
+      "0": "Off",
+      "1": "Min",
+      "2": "Low",
+      "3": "Medium",
+      "4": "High",
+      "5": "Max",
+      "6": "Auto"
+     },
+     "writable": true
+    }
+   ],
+   "description": ""
+  },
+  "FLOW": {
+   "attributes": [
+    {
+     "description": "",
+     "path": "state.flow",
+     "type": "float",
+     "writable": false
+    }
+   ],
+   "description": "Capability to measure flow l/hour (e.g. water flow by water meter)"
+  },
+  "FLOW_TEMPERATURE": {
+   "attributes": [
+    {
+     "description": "",
+     "path": "state.flowTemp",
+     "type": "float",
+     "unit": "Celsius",
+     "writable": false
+    }
+   ],
+   "description": "Capability to measure flow temperature degrees Celsius (e.g. water temperature by water meter)"
+  },
+  "FLOW_VOLUME": {
+   "attributes": [
+    {
+     "description": "",
+     "path": "state.volume",
+     "type": "float",
+     "writable": false
+    },
+    {
+     "description": "Calculated daily volume using the Hub time zone.",
+     "path": "state.volumeToday",
+     "type": "float",
+     "writable": false
+    },
+    {
+     "description": "Calculated previous-day volume using the Hub time zone.",
+     "path": "state.volumeYesterday",
+     "type": "float",
+     "writable": false
+    },
+    {
+     "description": "Marks the meter as hot-water capable. Set through DeviceMetaCommand.",
+     "path": "state.hotWater",
+     "type": "boolean",
+     "writable": true
+    }
+   ],
+   "description": "Capability to measure flow volume l (e.g. total water consumption by water meter)"
+  },
+  "FOSCAM_API": {
+   "attributes": [],
+   "description": "Foscam API capability"
+  },
+  "GENERATE_ALERT": {
+   "attributes": [
+    {
+     "description": "",
+     "path": "state.alert",
+     "type": "boolean",
+     "writable": false
+    },
+    {
+     "description": "",
+     "path": "state.alertAt",
+     "type": "timestampms",
+     "writable": false
+    },
+    {
+     "description": "",
+     "path": "state.alertStartAt",
+     "type": "timestampms",
+     "writable": false
+    }
+   ],
+   "description": "Device can generate alert"
+  },
+  "G_ALARM": {
+   "attributes": [
+    {
+     "description": "",
+     "path": "state.gAlarm",
+     "type": "boolean",
+     "writable": false
+    },
+    {
+     "description": "Unique identification that allows to be tracked",
+     "path": "state.gAlarmId",
+     "type": "string",
+     "writable": false
+    },
+    {
+     "description": "",
+     "path": "state.gAlarmAt",
+     "type": "timestampms",
+     "writable": false
+    },
+    {
+     "description": "Possible message text attached to triggered alarm",
+     "path": "state.gAlarmMsg",
+     "type": "string",
+     "writable": false
+    },
+    {
+     "description": "Device specific code for alarm details",
+     "path": "state.gAlarmCode",
+     "type": "string",
+     "writable": false
+    }
+   ],
+   "description": "Generic alarm triggered or suppressed"
+  },
+  "G_NOTIFICATION": {
+   "attributes": [
+    {
+     "description": "",
+     "path": "state.notifications",
+     "range": "str",
+     "type": "List",
+     "writable": false
+    }
+   ],
+   "description": "Device can report device specific notifications. List of strings. String contains timestamp and notification identifier, e.g. [\"1723805449000:NOTIF_1_ID\"]"
+  },
+  "HIGH_TEMP": {
+   "attributes": [],
+   "description": "Capability to report high temperature"
+  },
+  "HOME_SWITCH": {
+   "attributes": [],
+   "description": "Home switch mode. Used for remote controls/wallswitches which can be used as Home/Away switch E.g. with Aeotec wallmote quad device setting homeSwitchMode to True will control one scene with first and second buttons and another scene with 3rd and 4th buttons instead of controlling one scene / button Mode is available as boolean value in device attribute homeSwitchMode and can be changed with Device meta command attribute homeSwitchMod"
+  },
+  "HUE_SWITCH": {
+   "attributes": [],
+   "description": "Philips hue switch specific capability"
+  },
+  "HUMIDITY": {
+   "attributes": [
+    {
+     "description": "",
+     "path": "state.humidity",
+     "type": "float",
+     "unit": "Percent",
+     "writable": false
+    }
+   ],
+   "description": "Device can report air humidity"
+  },
+  "IAS_ACE": {
+   "attributes": [],
+   "description": "Zigbee IAS ACE capability"
+  },
+  "IDENTIFY": {
+   "attributes": [],
+   "description": "Device can identify itself"
+  },
+  "IKEA_ONOFF_SWITCH": {
+   "attributes": [],
+   "description": "Ikea device specific capability"
+  },
+  "IKEA_RC": {
+   "attributes": [],
+   "description": "Ikea device specific capability"
+  },
+  "KNX_AWAY_SWITCH": {
+   "attributes": [],
+   "description": "KNX Home/Away switch, via e.g. mqtt"
+  },
+  "LIFT": {
+   "attributes": [
+    {
+     "description": "",
+     "path": "state.liftPct",
+     "type": "int",
+     "unit": "Percent",
+     "writable": true
+    }
+   ],
+   "description": "Device can move curtain up/down"
+  },
+  "LIVE_FEED": {
+   "attributes": [],
+   "description": "Capability to produce live feed"
+  },
+  "LOUDNESS": {
+   "attributes": [
+    {
+     "description": "",
+     "path": "state.rcData.loudness",
+     "type": "boolean",
+     "writable": true
+    }
+   ],
+   "description": "Device supports Loudness"
+  },
+  "LOW_TEMP": {
+   "attributes": [
+    {
+     "description": "",
+     "path": "state.lowTemp",
+     "type": "boolean",
+     "writable": false
+    },
+    {
+     "description": "",
+     "path": "state.lowTempAt",
+     "type": "timestampms",
+     "writable": false
+    }
+   ],
+   "description": "Capability to report low temperature"
+  },
+  "LUX": {
+   "attributes": [
+    {
+     "description": "",
+     "path": "state.lux",
+     "type": "int",
+     "writable": false
+    }
+   ],
+   "description": "Capability to detect lux"
+  },
+  "MEASURE_POWER": {
+   "attributes": [
+    {
+     "description": "",
+     "path": "state.totalPower",
+     "type": "float",
+     "unit": "kWh",
+     "writable": false
+    },
+    {
+     "description": "",
+     "path": "state.powerToday",
+     "type": "float",
+     "unit": "kWh",
+     "writable": false
+    },
+    {
+     "description": "",
+     "path": "state.powerYesterday",
+     "type": "float",
+     "unit": "kWh",
+     "writable": false
+    }
+   ],
+   "description": "Device can measure power consumption"
+  },
+  "MOISTURE": {
+   "attributes": [
+    {
+     "description": "",
+     "path": "state.moisture",
+     "type": "boolean",
+     "writable": false
+    },
+    {
+     "description": "",
+     "path": "state.moistureAt",
+     "type": "timestampms",
+     "writable": false
+    }
+   ],
+   "description": "Device can report moisture"
+  },
+  "MOTION": {
+   "attributes": [
+    {
+     "description": "",
+     "path": "state.motion",
+     "type": "boolean",
+     "writable": false
+    },
+    {
+     "description": "",
+     "path": "state.lastMotion",
+     "type": "timestampms",
+     "writable": false
+    }
+   ],
+   "description": "Device detects motion"
+  },
+  "MUTE": {
+   "attributes": [
+    {
+     "description": "",
+     "path": "state.rcData.mute",
+     "type": "boolean",
+     "writable": true
+    }
+   ],
+   "description": "Device supports Mute"
+  },
+  "NEXT": {
+   "attributes": [],
+   "description": "Device supports next"
+  },
+  "NOX": {
+   "attributes": [
+    {
+     "description": "Unitless adaptive NOx index. The base value is 1; values above 1 indicate more nitrogen oxides in the air than usual.",
+     "path": "state.nox",
+     "type": "int",
+     "unit": "index",
+     "writable": false
+    }
+   ],
+   "description": "Capability to report nitrogen oxides air-quality index"
+  },
+  "ONVIF_API": {
+   "attributes": [],
+   "description": "ONVIF API capability"
+  },
+  "ON_OFF": {
+   "attributes": [
+    {
+     "description": "",
+     "path": "state.isOn",
+     "type": "boolean",
+     "writable": true
+    }
+   ],
+   "description": "Device can be turned on / off"
+  },
+  "PASSIVITY": {
+   "attributes": [
+    {
+     "description": "",
+     "path": "state.passive",
+     "type": "boolean",
+     "writable": false
+    },
+    {
+     "description": "",
+     "path": "state.passiveAt",
+     "type": "timestampms",
+     "writable": false
+    }
+   ],
+   "description": "Capability for detecting passivity of a person, healthcare, e.g. watch"
+  },
+  "PAUSE": {
+   "attributes": [
+    {
+     "description": "",
+     "path": "state.isOn",
+     "type": "boolean",
+     "writable": true
+    },
+    {
+     "description": "",
+     "path": "state.avtData.state",
+     "type": null,
+     "writable": false
+    }
+   ],
+   "description": "Device supports pause"
+  },
+  "PHASE_I": {
+   "attributes": [
+    {
+     "description": "List index 0 contains current for phase 1, index 1 for phase 2, and index 2 for phase 3.",
+     "path": "state.phaseI",
+     "type": "List",
+     "unit": "of int Amperes",
+     "writable": false
+    }
+   ],
+   "description": "List of electrical current on individual phases"
+  },
+  "PHASE_P": {
+   "attributes": [
+    {
+     "description": "List index 0 contains power for phase 1, index 1 for phase 2, and index 2 for phase 3.",
+     "path": "state.phaseP",
+     "type": "List",
+     "unit": "of int Watts",
+     "writable": false
+    }
+   ],
+   "description": "List of electricity power on individual phases"
+  },
+  "PHASE_U": {
+   "attributes": [
+    {
+     "description": "List index 0 contains voltage for phase 1, index 1 for phase 2, and index 2 for phase 3.",
+     "path": "state.phaseU",
+     "type": "List",
+     "unit": "of int Volts",
+     "writable": false
+    }
+   ],
+   "description": "List of electrical voltage on individual phases"
+  },
+  "PHONE_MAKE_CALL": {
+   "attributes": [
+    {
+     "description": "",
+     "path": "state.callToNumber",
+     "type": "Telephone",
+     "unit": "number as string",
+     "writable": true
+    }
+   ],
+   "description": "The device can make a phone calls"
+  },
+  "PHONE_RECEIVE_CALL": {
+   "attributes": [
+    {
+     "description": "",
+     "path": "state.callState",
+     "type": null,
+     "values": {
+      "1": "Idle",
+      "2": "Calling",
+      "3": "Ringing",
+      "4": "In call",
+      "5": "Hangup"
+     },
+     "writable": true
+    },
+    {
+     "description": "",
+     "path": "state.callFromNumber",
+     "type": "Telephone",
+     "unit": "number as string",
+     "writable": false
+    }
+   ],
+   "description": "The device can answer phone calls. When answering the current callState is RINGING and the given callState should be IN_CALL"
+  },
+  "PLAY": {
+   "attributes": [
+    {
+     "description": "",
+     "path": "state.avtData.state",
+     "type": null,
+     "writable": false
+    },
+    {
+     "description": "",
+     "path": "state.isOn",
+     "type": null,
+     "writable": false
+    }
+   ],
+   "description": "Device supports play"
+  },
+  "PLAY_MUTE": {
+   "attributes": [
+    {
+     "description": "",
+     "path": "state.playMute",
+     "type": "boolean",
+     "writable": true
+    }
+   ],
+   "description": "Speaker device play mute, true means muted and false means not muted"
+  },
+  "PLAY_TONE": {
+   "attributes": [
+    {
+     "description": "Write only, tone is not reported back in state.",
+     "path": "state.playTone",
+     "type": null,
+     "values": {
+      "ALARM": "Play alarm tone",
+      "RING": "Play ring tone",
+      "RING2": "Play alternate ring tone"
+     },
+     "writable": true
+    }
+   ],
+   "description": "Write-only tone trigger for speaker devices"
+  },
+  "PLAY_VOLUME": {
+   "attributes": [
+    {
+     "description": "",
+     "path": "state.playVolume",
+     "range": "0, 100",
+     "type": "int",
+     "writable": true
+    }
+   ],
+   "description": "Speaker device play volume"
+  },
+  "PM25": {
+   "attributes": [
+    {
+     "description": "PM2.5 means particulate matter with diameter less than 2.5 micrometers.",
+     "path": "state.pm25",
+     "type": "float",
+     "unit": "ug/m3",
+     "writable": false
+    }
+   ],
+   "description": "Capability to report PM2.5 fine particulate matter concentration"
+  },
+  "POWER_SAVE": {
+   "attributes": [
+    {
+     "description": "",
+     "path": "state.powerSave",
+     "type": null,
+     "values": {
+      "0": "Normal",
+      "1": "Pending",
+      "2": "In effect",
+      "3": "Temporarily off"
+     },
+     "writable": false
+    },
+    {
+     "description": "Timestamp for when the power save changed.",
+     "path": "state.powerSaveAt",
+     "type": "timestampms",
+     "writable": false
+    }
+   ],
+   "description": "Device can operate in a device specific powersave mode: NORMAL = 0  # Normal operation mode, power cord connected, PENDING = 1  # Power cord disconnected, pending power save, IN_EFFECT = 2  # Power save in effect, TEMPORARILY_OFF = 3  # Power save is in effect, but we are doing periodic connection"
+  },
+  "POWER_SOURCE": {
+   "attributes": [
+    {
+     "description": "",
+     "path": "state.powerSource",
+     "type": null,
+     "values": {
+      "1": "Mains power",
+      "2": "Battery power"
+     },
+     "writable": false
+    },
+    {
+     "description": "Timestamp for when the power source changed.",
+     "path": "state.powerSourceAt",
+     "type": "timestampms",
+     "writable": false
+    }
+   ],
+   "description": "Device can report which power source it is using. SOURCE_MAINS = Mains power, SOURCE_BATTERY = Battery power"
+  },
+  "PRESSURE": {
+   "attributes": [
+    {
+     "description": "",
+     "path": "state.pressure",
+     "type": "int",
+     "unit": "Pascal",
+     "writable": false
+    }
+   ],
+   "description": "Device can report air pressure"
+  },
+  "PREVIOUS": {
+   "attributes": [],
+   "description": "Device supports previous"
+  },
+  "PROXIMITY": {
+   "attributes": [
+    {
+     "description": "",
+     "path": "state.near",
+     "type": "boolean",
+     "writable": false
+    },
+    {
+     "description": "",
+     "path": "state.nearAt",
+     "type": "timestampms",
+     "writable": false
+    }
+   ],
+   "description": "Capability to detect the proximity of the device i.e. is it close to hub or not."
+  },
+  "PUSH_NOTIFICATION": {
+   "attributes": [],
+   "description": "Device can receive push notifications from push notification center in internet"
+  },
+  "RAW_MESSAGE": {
+   "attributes": [
+    {
+     "description": "",
+     "path": "state.datagram",
+     "type": "List",
+     "unit": "of integers",
+     "writable": false
+    }
+   ],
+   "description": "The original native datagram received from the device"
+  },
+  "RC_DIMMER": {
+   "attributes": [],
+   "description": "Functional capability allowing the remote control to be selected for a dimmer rule"
+  },
+  "RECORD_AUDIO": {
+   "attributes": [],
+   "description": "Capability to record audio"
+  },
+  "RECORD_VIDEO": {
+   "attributes": [
+    {
+     "description": "",
+     "path": "medias",
+     "type": "List",
+     "unit": "of MediaProfile objects",
+     "writable": false
+    },
+    {
+     "description": "",
+     "path": "state.media",
+     "range": "x",
+     "type": "string",
+     "unit": ": medias.token",
+     "writable": true
+    },
+    {
+     "description": "",
+     "path": "state.recording",
+     "type": "boolean",
+     "writable": true
+    },
+    {
+     "description": "",
+     "path": "state.viewerCount",
+     "type": "int",
+     "writable": false
+    },
+    {
+     "description": "",
+     "path": "state.connectionState",
+     "type": null,
+     "values": {
+      "DEGRADED": "Connection is degraded",
+      "LOST": "Connection is lost",
+      "OK": "Connection is healthy"
+     },
+     "writable": false
+    }
+   ],
+   "description": "Capability to record video"
+  },
+  "REC_MUTE": {
+   "attributes": [
+    {
+     "description": "",
+     "path": "state.recMute",
+     "type": "boolean",
+     "writable": true
+    }
+   ],
+   "description": "Speaker device record mute, true means muted and false means not muted"
+  },
+  "REC_VOLUME": {
+   "attributes": [
+    {
+     "description": "",
+     "path": "state.recVolume",
+     "range": "0, 100",
+     "type": "int",
+     "writable": true
+    }
+   ],
+   "description": "Speaker device record volume (speaker has microphone)"
+  },
+  "REMOTE_CONTROL": {
+   "attributes": [],
+   "description": "Device is a remote control"
+  },
+  "ROAMING": {
+   "attributes": [
+    {
+     "description": "",
+     "path": "state.autoPaired",
+     "type": "boolean",
+     "writable": true
+    }
+   ],
+   "description": "Capability for indicating that the device is a roaming device which may be automatically paired to multiple hubs."
+  },
+  "RSSI": {
+   "attributes": [
+    {
+     "description": "",
+     "path": "state.rssi",
+     "type": "int",
+     "writable": false
+    }
+   ],
+   "description": "Capability to report RSSI of received message."
+  },
+  "RW_VALUE": {
+   "attributes": [
+    {
+     "description": "",
+     "path": "state.rwValue",
+     "type": "number",
+     "writable": true
+    },
+    {
+     "description": "",
+     "path": "state.rwValueAt",
+     "type": "timestampms",
+     "writable": false
+    }
+   ],
+   "description": "Device represent general read/write value"
+  },
+  "SEEK": {
+   "attributes": [],
+   "description": "Device supports seek"
+  },
+  "SELF_MOTION": {
+   "attributes": [
+    {
+     "description": "",
+     "path": "state.selfMotion",
+     "type": "boolean",
+     "writable": false
+    },
+    {
+     "description": "",
+     "path": "state.lastSelfMotion",
+     "type": "timestampms",
+     "writable": false
+    },
+    {
+     "description": "",
+     "path": "state.motionLevel",
+     "range": "0.0, 1.0",
+     "type": "float",
+     "writable": false
+    }
+   ],
+   "description": "Device detects own motion"
+  },
+  "SETPOINT": {
+   "attributes": [
+    {
+     "description": "",
+     "path": "state.setpoint",
+     "type": "float",
+     "unit": "Celsius",
+     "writable": true
+    },
+    {
+     "description": "Timestamp for when the setpoint was set",
+     "path": "state.setpointAt",
+     "type": "timestampms",
+     "writable": false
+    },
+    {
+     "description": "Schedule for setpoints to use. List of tuples where first item is starttime for setpoint and second item is the setpoint in effect after the starttime.",
+     "path": "state.setpointSchedule",
+     "range": "Tuple[timestampms, setpoint",
+     "type": "List",
+     "unit": "]",
+     "writable": true
+    }
+   ],
+   "description": "Generic setpoint device"
+  },
+  "SETPOINT_TEMPERATURE": {
+   "attributes": [
+    {
+     "description": "For example, a room setpoint may drive both floor heating and air conditioning through rules.",
+     "path": "state.setpointTemp",
+     "type": "number",
+     "writable": true
+    },
+    {
+     "description": "Timestamp for when the setpoint temperature was last updated.",
+     "path": "state.setpointTempAt",
+     "type": "timestampms",
+     "writable": false
+    }
+   ],
+   "description": "Virtual device containing a temperature setpoint value. This can be used for setting a single generic setpoint which is then used for controlling multiple physical devices by rules."
+  },
+  "SHUTTER": {
+   "attributes": [
+    {
+     "description": "Current motor direction.",
+     "path": "state.motorStatus",
+     "type": null,
+     "values": {
+      "-1": "Motor down",
+      "0": "Motor stopped",
+      "1": "Motor up"
+     },
+     "writable": false
+    },
+    {
+     "description": "Indicates that calibration is running.",
+     "path": "state.calibrating",
+     "type": "boolean",
+     "writable": false
+    }
+   ],
+   "description": "Device controls curtains"
+  },
+  "SIGNAL": {
+   "attributes": [
+    {
+     "description": "",
+     "path": "state.isOn",
+     "type": "boolean",
+     "writable": true
+    }
+   ],
+   "description": "Device can give signal. E.g. Bacnet binary value"
+  },
+  "SIM_PIN": {
+   "attributes": [
+    {
+     "description": "",
+     "path": "state.simStatus",
+     "type": null,
+     "values": {
+      "0": "SIM PIN OK",
+      "1": "SIM PIN missing",
+      "10": "Unknown SIM credentials required",
+      "11": "SIM modem missing",
+      "2": "SIM missing",
+      "3": "SIM PIN required",
+      "4": "SIM PUK required"
+     },
+     "writable": false
+    },
+    {
+     "description": "",
+     "path": "state.pinAttempts",
+     "type": "integer",
+     "unit": ", remaining number of PIN attempts",
+     "writable": false
+    },
+    {
+     "description": "",
+     "path": "state.pukAttempts",
+     "type": "integer",
+     "unit": ", remaining number of PUK attempts",
+     "writable": false
+    },
+    {
+     "description": "",
+     "path": "state.pin",
+     "type": "pin",
+     "unit": "code as a string",
+     "writable": false
+    },
+    {
+     "description": "",
+     "path": "state.puk",
+     "type": "puk",
+     "unit": "code as a string",
+     "writable": false
+    }
+   ],
+   "description": "The device has PIN/PUK configuration"
+  },
+  "SIREN": {
+   "attributes": [
+    {
+     "description": "",
+     "path": "state.sirenOn",
+     "type": "boolean",
+     "writable": false
+    },
+    {
+     "description": "",
+     "path": "state.sirenStartAt",
+     "type": "timestampms",
+     "writable": false
+    },
+    {
+     "description": "",
+     "path": "state.sirenAt",
+     "type": "timestampms",
+     "writable": false
+    },
+    {
+     "description": "",
+     "path": "state.mutedForMs",
+     "type": "int",
+     "writable": false
+    }
+   ],
+   "description": "Device can do warning sound"
+  },
+  "SMOKE": {
+   "attributes": [
+    {
+     "description": "",
+     "path": "state.alert",
+     "type": "boolean",
+     "writable": false
+    },
+    {
+     "description": "",
+     "path": "state.alertStartAt",
+     "type": "timestampms",
+     "writable": false
+    },
+    {
+     "description": "",
+     "path": "state.alertAt",
+     "type": "timestampms",
+     "writable": false
+    }
+   ],
+   "description": "Device detects fire/smoke"
+  },
+  "STARTUP_VALS": {
+   "attributes": [
+    {
+     "description": "",
+     "path": "startupVals",
+     "type": "boolean",
+     "writable": false
+    }
+   ],
+   "description": "Device can restore previous settings after power cycle"
+  },
+  "STATE_MACHINE": {
+   "attributes": [
+    {
+     "description": "",
+     "path": "state.currentState",
+     "type": "Integer",
+     "values": {
+      "2": "describing the state of the device."
+     },
+     "writable": false
+    },
+    {
+     "description": "",
+     "path": "state.currentStateAt",
+     "type": "timestampms",
+     "writable": false
+    }
+   ],
+   "description": ""
+  },
+  "STOP": {
+   "attributes": [],
+   "description": "Device supports stop"
+  },
+  "TEMPERATURE": {
+   "attributes": [
+    {
+     "description": "",
+     "path": "state.temperature",
+     "type": "float",
+     "unit": "Celsius",
+     "writable": false
+    }
+   ],
+   "description": "Device can report temperature"
+  },
+  "TILT": {
+   "attributes": [
+    {
+     "description": "",
+     "path": "state.tiltPct",
+     "type": "int",
+     "writable": true
+    }
+   ],
+   "description": "Device can control the angle of curtain"
+  },
+  "TRANSITION": {
+   "attributes": [
+    {
+     "description": "",
+     "path": "state.transitionMsec",
+     "type": "int",
+     "writable": true
+    }
+   ],
+   "description": "Device can use transition time between state changes"
+  },
+  "TREBLE": {
+   "attributes": [
+    {
+     "description": "",
+     "path": "state.rcData.treble",
+     "range": "0, 10",
+     "type": "int",
+     "writable": true
+    }
+   ],
+   "description": "Device supports Treble"
+  },
+  "TWILIGHT": {
+   "attributes": [
+    {
+     "description": "",
+     "path": "state.twilight",
+     "type": "boolean",
+     "writable": false
+    },
+    {
+     "description": "",
+     "path": "state.twilightStart",
+     "type": "timestampms",
+     "writable": false
+    },
+    {
+     "description": "",
+     "path": "state.twilightStop",
+     "type": "timestampms",
+     "writable": false
+    },
+    {
+     "description": "",
+     "path": "twilightThreshold",
+     "type": "int",
+     "unit": "Lux",
+     "writable": true
+    }
+   ],
+   "description": "Device detects twilight"
+  },
+  "UPGRADE": {
+   "attributes": [
+    {
+     "description": "Upgrade availability and progress state. Detailed upgrade metadata can be read through the device-specific upgrade-info response, which includes fields such as fwVersion, swVersion, newFwVersion, newSwVersion, lastUpgrade, autoInstall, pctComplete, and etaMs.",
+     "path": "state.upgradeStatus",
+     "type": null,
+     "values": {
+      "AVAILABLE": "New version available",
+      "BOOTING": "Booting after upgrade",
+      "ENQUEUED": "Upgrade queued",
+      "OK": "No upgrade available",
+      "RUNNING": "Upgrade running"
+     },
+     "writable": false
+    }
+   ],
+   "description": "Firmware upgrade capability"
+  },
+  "USER_PRESENCE": {
+   "attributes": [
+    {
+     "description": "User id of the last user who logged into this ui and used this hub. Read-only.",
+     "path": "state.user",
+     "type": "uuid",
+     "writable": false
+    },
+    {
+     "description": "True if the ui device is currently connected this Hub otherwise False. Connected means that the Cozify app is running and using this Hub. It takes about 10-20 seconds for the hub to detect that the app was closed. Read-only.",
+     "path": "state.session",
+     "type": "boolean",
+     "writable": false
+    }
+   ],
+   "description": "Device can report user presence"
+  },
+  "VALVE": {
+   "attributes": [
+    {
+     "description": "",
+     "path": "state.openPct",
+     "type": "float",
+     "unit": "percent",
+     "writable": true
+    },
+    {
+     "description": "",
+     "path": "state.openPctAt",
+     "type": "timestampms",
+     "writable": false
+    }
+   ],
+   "description": "Percentage value telling how open a valve should be"
+  },
+  "VOC": {
+   "attributes": [
+    {
+     "description": "",
+     "path": "state.vocPpm",
+     "type": "int",
+     "writable": false
+    }
+   ],
+   "description": "Capability to detect Volatile Organic Compound"
+  },
+  "VOICE_CALL": {
+   "attributes": [
+    {
+     "description": "",
+     "path": "state.callState",
+     "type": null,
+     "values": {
+      "1": "Idle",
+      "2": "Calling",
+      "3": "Ringing",
+      "4": "In call",
+      "5": "Hangup"
+     },
+     "writable": true
+    },
+    {
+     "description": "",
+     "path": "state.callAt",
+     "type": "timestampms",
+     "writable": false
+    },
+    {
+     "description": "",
+     "path": "state.callStopAt",
+     "type": "timestampms",
+     "writable": false
+    },
+    {
+     "description": "",
+     "path": "state.callIncoming",
+     "type": "boolean",
+     "writable": false
+    }
+   ],
+   "description": "The device can perform audio calls (cellular, voip etc.)"
+  },
+  "VOICE_CALL_AUTOANSWER": {
+   "attributes": [
+    {
+     "description": "",
+     "path": "state.callAutoAnswerUntil",
+     "type": "timestampms",
+     "writable": true
+    },
+    {
+     "description": "",
+     "path": "state.callAutoAnswerFrom",
+     "type": "List",
+     "unit": "of telephone numbers as strings",
+     "writable": true
+    }
+   ],
+   "description": "The device can be configured to automatically answer calls for a period of time. If a list of allowed telephone numbers is given, the call will be automatically answered only if it comes from such a number."
+  },
+  "VOLUME": {
+   "attributes": [
+    {
+     "description": "",
+     "path": "state.rcData.volume",
+     "type": null,
+     "writable": true
+    }
+   ],
+   "description": "Device supports Volume"
+  },
+  "VOX": {
+   "attributes": [
+    {
+     "description": "Unitless adaptive VOC index. The index average is 100; values below 100 indicate improving air quality and values above 100 indicate worsening air quality.",
+     "path": "state.vox",
+     "type": "int",
+     "unit": "index",
+     "writable": false
+    }
+   ],
+   "description": "Capability to report volatile organic compounds air-quality index"
+  },
+  "VU": {
+   "attributes": [
+    {
+     "description": "",
+     "path": "state.mode",
+     "type": null,
+     "values": {
+      "0": "Stopped",
+      "1": "Traveling",
+      "2": "Away",
+      "3": "Home",
+      "4": "Boost"
+     },
+     "writable": true
+    },
+    {
+     "description": "",
+     "path": "state.freshTemperature",
+     "type": "float",
+     "unit": "Celsius",
+     "writable": false
+    },
+    {
+     "description": "",
+     "path": "state.supplyTemperature",
+     "type": "float",
+     "unit": "Celsius",
+     "writable": false
+    },
+    {
+     "description": "",
+     "path": "state.extractTemperature",
+     "type": "float",
+     "unit": "Celsius",
+     "writable": false
+    }
+   ],
+   "description": "Ventilation Unit, e.g. Swegon"
+  },
+  "VU_FN_FIREPLACE": {
+   "attributes": [
+    {
+     "description": "",
+     "path": "state.fn_fireplace",
+     "type": "boolean",
+     "writable": true
+    }
+   ],
+   "description": "Ventilation Unit Fireplace function, increases indoor air pressure when there is fire burning in the fireplace"
+  },
+  "WEARABLE": {
+   "attributes": [
+    {
+     "description": "",
+     "path": "state.worn",
+     "type": "boolean",
+     "writable": false
+    },
+    {
+     "description": "",
+     "path": "state.wornAt",
+     "type": "timestampms",
+     "writable": false
+    }
+   ],
+   "description": "Capability for indicating that the device is worn, e.g. a watch"
+  },
+  "ZGB": {
+   "attributes": [],
+   "description": "Zigbee Device"
+  },
+  "ZW": {
+   "attributes": [],
+   "description": "ZWave device"
+  }
+ },
+ "changelog": [
+  {
+   "date": "2026-09-23",
+   "revision": "0.8",
+   "summary": "Documented the `DEVICE_LIST` and `SCENE` configuration item field types."
+  },
+  {
+   "date": "2026-09-08",
+   "revision": "0.7",
+   "summary": "Documented the end-to-end flow for claiming a factory-new Hub on the local network with an example sequence."
+  },
+  {
+   "date": "2026-09-01",
+   "revision": "0.6",
+   "summary": "Documented `GET_MODBUS_TCP_CONFIG` and the `MODBUS_TCP_CONFIG` response object. Restructured Z-Wave operations into per-message reference sections."
+  },
+  {
+   "date": "2026-08-18",
+   "revision": "0.5",
+   "summary": "Added an AI-generated documentation notice."
+  },
+  {
+   "date": "2026-06-25",
+   "revision": "0.4",
+   "summary": "Documented raw history datapoint retrieval by omitting `interval`."
+  },
+  {
+   "date": "2026-06-23",
+   "revision": "0.3",
+   "summary": "Documented remote-access `402 Payment Required` and obsolete API version `410 Gone` responses."
+  },
+  {
+   "date": "2026-06-03",
+   "revision": "0.2",
+   "summary": "Documented `VOX`, `NOX`, and `PM25` device capabilities."
+  },
+  {
+   "date": "2026-06-03",
+   "revision": "0.1",
+   "summary": "Initial document revision."
+  }
+ ],
+ "command_types": [
+  "CMD_DEVICE",
+  "CMD_DEVICE_ACCESS",
+  "CMD_DEVICE_LOCK",
+  "CMD_DEVICE_META",
+  "CMD_DEVICE_OFF",
+  "CMD_DEVICE_ON",
+  "CMD_DEVICE_VISIBLE",
+  "CMD_FNIP_INPUT",
+  "CMD_FNIP_OUTPUT",
+  "CMD_GET_PROPOSALS",
+  "CMD_GET_UPGRADE_INFO",
+  "CMD_GET_UPGRADE_INFOS",
+  "CMD_GROUP",
+  "CMD_GROUP_OFF",
+  "CMD_GROUP_ON",
+  "CMD_IGNORE_DEVICE",
+  "CMD_RECORD_OFF",
+  "CMD_RECORD_ON",
+  "CMD_RESET_IGNORED",
+  "CMD_ROOM",
+  "CMD_SCENE",
+  "CMD_SCENE_OFF",
+  "CMD_SCENE_ON",
+  "CMD_SET_ROOM_ORDER",
+  "CMD_VIEW_START",
+  "CMD_VIEW_STOP"
+ ],
+ "docs_date": "2026-09-23",
+ "docs_revision": "0.8",
+ "endpoints": [
+  {
+   "access": "ANONYMOUS_ACCESS",
+   "method": "GET",
+   "path": "/hub",
+   "section": "5.1.1"
+  },
+  {
+   "access": "ANONYMOUS_ACCESS",
+   "method": "POST",
+   "path": "/hub/claim",
+   "section": "5.1.2"
+  },
+  {
+   "access": "USER_ADMIN_ACCESS",
+   "method": "PUT",
+   "path": "/hub/name",
+   "section": "5.1.3"
+  },
+  {
+   "access": "GUEST_ACCESS",
+   "method": "GET",
+   "path": "/hub/poll",
+   "section": "5.1.4"
+  },
+  {
+   "access": "GUEST_ACCESS",
+   "method": "GET",
+   "path": "/hub/colors",
+   "section": "5.1.5"
+  },
+  {
+   "access": "GUEST_ACCESS",
+   "method": "POST",
+   "path": "/hub/colors",
+   "section": "5.1.6"
+  },
+  {
+   "access": "GUEST_ACCESS",
+   "method": "DELETE",
+   "path": "/hub/colors",
+   "section": "5.1.7"
+  },
+  {
+   "access": "USER_ADMIN_ACCESS",
+   "method": "POST",
+   "path": "/hub/zigbeechannel",
+   "section": "5.1.8"
+  },
+  {
+   "access": "USER_ADMIN_ACCESS",
+   "method": "POST",
+   "path": "/hub/zigbeepower",
+   "section": "5.1.9"
+  },
+  {
+   "access": "GUEST_ACCESS",
+   "method": "GET",
+   "path": "/hub/zigbeestatus",
+   "section": "5.1.10"
+  },
+  {
+   "access": "USER_ADMIN_ACCESS",
+   "method": "POST",
+   "path": "/hub/zigbeesettings",
+   "section": "5.1.11"
+  },
+  {
+   "access": "USER_ADMIN_ACCESS",
+   "method": "GET",
+   "path": "/hub/zigbeescan",
+   "section": "5.1.12"
+  },
+  {
+   "access": "USER_ADMIN_ACCESS",
+   "method": "POST",
+   "path": "/hub/pairphilips",
+   "section": "5.1.13"
+  },
+  {
+   "access": "USER_ADMIN_ACCESS",
+   "method": "POST",
+   "path": "/hub/pairairpatrol",
+   "section": "5.1.14"
+  },
+  {
+   "access": "USER_ADMIN_ACCESS",
+   "method": "POST",
+   "path": "/hub/lockconfig",
+   "section": "5.1.15"
+  },
+  {
+   "access": "GUEST_ACCESS",
+   "method": "GET",
+   "path": "/hub/users",
+   "section": "5.1.16"
+  },
+  {
+   "access": "GUEST_ACCESS",
+   "method": "GET",
+   "path": "/hub/tz",
+   "section": "5.1.17"
+  },
+  {
+   "access": "USER_ADMIN_ACCESS",
+   "method": "PUT",
+   "path": "/hub/tz",
+   "section": "5.1.18"
+  },
+  {
+   "access": "ANONYMOUS_ACCESS",
+   "method": "GET",
+   "path": "/hub/housetypes",
+   "section": "5.1.19"
+  },
+  {
+   "access": "GUEST_ACCESS",
+   "method": "GET",
+   "path": "/hub/housetype",
+   "section": "5.1.20"
+  },
+  {
+   "access": "USER_ADMIN_ACCESS",
+   "method": "PUT",
+   "path": "/hub/housetype",
+   "section": "5.1.21"
+  },
+  {
+   "access": "GUEST_ACCESS",
+   "method": "GET",
+   "path": "/hub/timezones",
+   "section": "5.1.22"
+  },
+  {
+   "access": "USER_ADMIN_ACCESS",
+   "method": "GET",
+   "path": "/hub/433devices",
+   "section": "5.1.23"
+  },
+  {
+   "access": "USER_ADMIN_ACCESS",
+   "method": "POST",
+   "path": "/hub/pair433",
+   "section": "5.1.24"
+  },
+  {
+   "access": "USER_ADMIN_ACCESS",
+   "method": "GET",
+   "path": "/hub/scan",
+   "section": "5.1.25"
+  },
+  {
+   "access": "USER_ADMIN_ACCESS",
+   "method": "PUT",
+   "path": "/hub/scan",
+   "section": "5.1.26"
+  },
+  {
+   "access": "USER_ADMIN_ACCESS",
+   "method": "GET",
+   "path": "/hub/stopscan",
+   "section": "5.1.27"
+  },
+  {
+   "access": "GUEST_ACCESS",
+   "method": "GET",
+   "path": "/hub/features",
+   "section": "5.1.28"
+  },
+  {
+   "access": "USER_ADMIN_ACCESS",
+   "method": "POST",
+   "path": "/hub/activatefeature",
+   "section": "5.1.29"
+  },
+  {
+   "access": "USER_ADMIN_ACCESS",
+   "method": "POST",
+   "path": "/hub/pairIp",
+   "section": "5.1.30"
+  },
+  {
+   "access": "USER_ADMIN_ACCESS",
+   "method": "POST",
+   "path": "/hub/protocolconfig",
+   "section": "5.1.31"
+  },
+  {
+   "access": "USER_ADMIN_ACCESS",
+   "method": "GET",
+   "path": "/hub/serialports",
+   "section": "5.1.32"
+  },
+  {
+   "access": "USER_ADMIN_ACCESS",
+   "method": "POST",
+   "path": "/hub/serialport",
+   "section": "5.1.33"
+  },
+  {
+   "access": "USER_ADMIN_ACCESS",
+   "method": "GET",
+   "path": "/hub/sync",
+   "section": "5.1.34"
+  },
+  {
+   "access": "USER_ADMIN_ACCESS",
+   "method": "GET",
+   "path": "/hub/restart",
+   "section": "5.1.35"
+  },
+  {
+   "access": "USER_ADMIN_ACCESS",
+   "method": "GET",
+   "path": "/hub/reboot",
+   "section": "5.1.36"
+  },
+  {
+   "access": "USER_ADMIN_ACCESS",
+   "method": "GET",
+   "path": "/hub/shutdown",
+   "section": "5.1.37"
+  },
+  {
+   "access": "SUPER_ADMIN_ACCESS",
+   "method": "POST",
+   "path": "/hub/remotepair",
+   "section": "5.1.38"
+  },
+  {
+   "access": "USER_ADMIN_ACCESS",
+   "method": "PUT",
+   "path": "/hub/autoconfig",
+   "section": "5.1.39"
+  },
+  {
+   "access": "GUEST_ACCESS",
+   "method": "GET",
+   "path": "/devices",
+   "section": "5.2.1"
+  },
+  {
+   "access": "IDENTIFIED_USER_ACCESS",
+   "method": "PUT",
+   "path": "/devices",
+   "section": "5.2.2"
+  },
+  {
+   "access": "USER_ADMIN_ACCESS",
+   "method": "DELETE",
+   "path": "/devices",
+   "section": "5.2.3"
+  },
+  {
+   "access": "GUEST_ACCESS",
+   "method": "PUT",
+   "path": "/devices/command",
+   "section": "5.2.4"
+  },
+  {
+   "access": "GUEST_ACCESS",
+   "method": "PUT",
+   "path": "/devices/preset",
+   "section": "5.2.5"
+  },
+  {
+   "access": "USER_ADMIN_ACCESS",
+   "method": "GET",
+   "path": "/devices/configuration",
+   "section": "5.2.6"
+  },
+  {
+   "access": "USER_ADMIN_ACCESS",
+   "method": "PUT",
+   "path": "/devices/configuration",
+   "section": "5.2.7"
+  },
+  {
+   "access": "USER_ADMIN_ACCESS",
+   "method": "DELETE",
+   "path": "/devices/configuration",
+   "section": "5.2.8"
+  },
+  {
+   "access": "GUEST_ACCESS",
+   "method": "GET",
+   "path": "/groups",
+   "section": "5.3.1"
+  },
+  {
+   "access": "IDENTIFIED_USER_ACCESS",
+   "method": "PUT",
+   "path": "/groups",
+   "section": "5.3.2"
+  },
+  {
+   "access": "GUEST_ACCESS",
+   "method": "PUT",
+   "path": "/groups/command",
+   "section": "5.3.3"
+  },
+  {
+   "access": "IDENTIFIED_USER_ACCESS",
+   "method": "DELETE",
+   "path": "/groups",
+   "section": "5.3.4"
+  },
+  {
+   "access": "GUEST_ACCESS",
+   "method": "GET",
+   "path": "/rules",
+   "section": "5.4.1"
+  },
+  {
+   "access": "IDENTIFIED_USER_ACCESS",
+   "method": "PUT",
+   "path": "/rules",
+   "section": "5.4.2"
+  },
+  {
+   "access": "IDENTIFIED_USER_ACCESS",
+   "method": "PUT",
+   "path": "/rules/command",
+   "section": "5.4.3"
+  },
+  {
+   "access": "IDENTIFIED_USER_ACCESS",
+   "method": "DELETE",
+   "path": "/rules",
+   "section": "5.4.4"
+  },
+  {
+   "access": "GUEST_ACCESS",
+   "method": "GET",
+   "path": "/rules/templates",
+   "section": "5.4.5"
+  },
+  {
+   "access": "USER_ADMIN_ACCESS",
+   "method": "GET",
+   "path": "/rules/template",
+   "section": "5.4.6"
+  },
+  {
+   "access": "USER_ADMIN_ACCESS",
+   "method": "GET",
+   "path": "/rules/log",
+   "section": "5.4.7"
+  },
+  {
+   "access": "USER_ADMIN_ACCESS",
+   "method": "POST",
+   "path": "/rules/template",
+   "section": "5.4.8"
+  },
+  {
+   "access": "USER_ADMIN_ACCESS",
+   "method": "DELETE",
+   "path": "/rules/template",
+   "section": "5.4.9"
+  },
+  {
+   "access": "IDENTIFIED_USER_ACCESS",
+   "method": "PUT",
+   "path": "/rules/onConfiguration",
+   "section": "5.4.10"
+  },
+  {
+   "access": "IDENTIFIED_USER_ACCESS",
+   "method": "POST",
+   "path": "/rules/proposals",
+   "section": "5.4.11"
+  },
+  {
+   "access": "GUEST_ACCESS",
+   "method": "GET",
+   "path": "/scenes",
+   "section": "5.5.1"
+  },
+  {
+   "access": "IDENTIFIED_USER_ACCESS",
+   "method": "PUT",
+   "path": "/scenes",
+   "section": "5.5.2"
+  },
+  {
+   "access": "GUEST_ACCESS",
+   "method": "PUT",
+   "path": "/scenes/command",
+   "section": "5.5.3"
+  },
+  {
+   "access": "IDENTIFIED_USER_ACCESS",
+   "method": "DELETE",
+   "path": "/scenes",
+   "section": "5.5.4"
+  },
+  {
+   "access": "GUEST_ACCESS",
+   "method": "GET",
+   "path": "/rooms",
+   "section": "5.6.1"
+  },
+  {
+   "access": "IDENTIFIED_USER_ACCESS",
+   "method": "PUT",
+   "path": "/rooms",
+   "section": "5.6.2"
+  },
+  {
+   "access": "IDENTIFIED_USER_ACCESS",
+   "method": "PUT",
+   "path": "/rooms/order",
+   "section": "5.6.3"
+  },
+  {
+   "access": "IDENTIFIED_USER_ACCESS",
+   "method": "DELETE",
+   "path": "/rooms",
+   "section": "5.6.4"
+  },
+  {
+   "access": "GUEST_ACCESS",
+   "method": "GET",
+   "path": "/alarms",
+   "section": "5.7.1"
+  },
+  {
+   "access": "IDENTIFIED_USER_ACCESS",
+   "method": "PUT",
+   "path": "/alarms/close",
+   "section": "5.7.2"
+  },
+  {
+   "access": "IDENTIFIED_USER_ACCESS",
+   "method": "DELETE",
+   "path": "/alarms",
+   "section": "5.7.3"
+  },
+  {
+   "access": null,
+   "method": "GET",
+   "path": "/bacnet/settings",
+   "section": "5.8.1"
+  },
+  {
+   "access": null,
+   "method": "POST",
+   "path": "/bacnet/settings",
+   "section": "5.8.2"
+  },
+  {
+   "access": null,
+   "method": "POST",
+   "path": "/bacnet/defaultsettings",
+   "section": "5.8.3"
+  },
+  {
+   "access": null,
+   "method": "GET",
+   "path": "/bacnet/localdevicetypes",
+   "section": "5.8.4"
+  },
+  {
+   "access": null,
+   "method": "GET",
+   "path": "/bacnet/objecttypes",
+   "section": "5.8.5"
+  },
+  {
+   "access": null,
+   "method": "POST",
+   "path": "/bacnet/device",
+   "section": "5.8.6"
+  },
+  {
+   "access": null,
+   "method": "POST",
+   "path": "/bacnet/scan",
+   "section": "5.8.7"
+  },
+  {
+   "access": null,
+   "method": "GET",
+   "path": "/bacnet/devices",
+   "section": "5.8.8"
+  },
+  {
+   "access": null,
+   "method": "POST",
+   "path": "/bacnet/pair",
+   "section": "5.8.9"
+  },
+  {
+   "access": null,
+   "method": "GET",
+   "path": "/log",
+   "section": "5.9.1"
+  }
+ ],
+ "feature_codes": {
+  "1": "VIDEO_SERVICE",
+  "10": "BACNET",
+  "11": "VIEW_HISTORY",
+  "12": "ZWAVE",
+  "13": "REMOTE_SENSOR",
+  "14": "LOG_SERVICE",
+  "15": "MODBUS",
+  "16": "EIGHT68",
+  "17": "MQTT",
+  "18": "CELLULAR",
+  "19": "MBUS",
+  "2": "CUSTOM_RULES",
+  "20": "SPOT_PRICES",
+  "21": "PREMIUM",
+  "22": "FOUR33_HW2",
+  "23": "BACNET_SERVER",
+  "24": "BACNET_CLIENT",
+  "25": "MODBUS_TCP_SERVER",
+  "3": "EVENTS",
+  "32": "BLE",
+  "4": "NO_NMAP_SCAN",
+  "5": "REMOTE_USAGE",
+  "6": "SMS_MESSAGING",
+  "7": "PN_MESSAGING",
+  "8": "SEND_EMAIL",
+  "9": "SERVER_CONNECTION"
+ },
+ "source": "/tmp/claude-0/-home-claude/c74d82db-5fb4-5fc6-94d5-1fed293eeb2a/scratchpad/docs/hub_api.md"
+}

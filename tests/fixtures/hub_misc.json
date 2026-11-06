@@ -1,0 +1,40 @@
+{
+ "rules": {
+  "20000000-0000-4000-8000-000000000001": {
+   "type": "RULE",
+   "id": "20000000-0000-4000-8000-000000000001",
+   "is_on": true,
+   "scenes": {},
+   "timers": [],
+   "config": {
+    "type": "CONFIG",
+    "id": "20000000-0000-4000-8000-000000000001",
+    "name": "Coffee watcher",
+    "configType": "COFFEE_WATCH",
+    "inputs": {},
+    "outputs": {},
+    "extras": {}
+   },
+   "timestamp": 1
+  }
+ },
+ "scenes": {
+  "30000000-0000-4000-8000-000000000001": {
+   "type": "SCENE",
+   "id": "30000000-0000-4000-8000-000000000001",
+   "category": "USER",
+   "name": "Evening",
+   "isOn": false,
+   "presets": {},
+   "timestamp": 1
+  }
+ },
+ "rooms": {
+  "10000000-0000-4000-8000-000000000001": {
+   "type": "ROOM",
+   "id": "10000000-0000-4000-8000-000000000001",
+   "name": "Office",
+   "timestamp": 1
+  }
+ }
+}

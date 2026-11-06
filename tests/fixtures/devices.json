@@ -1,0 +1,185 @@
+{
+ "00000000-0000-4000-8000-000000000001": {
+  "id": "00000000-0000-4000-8000-000000000001",
+  "name": "Air quality sensor",
+  "rwx": 509,
+  "manufacturer": "Iotsu",
+  "model": "L2 AQ05",
+  "room": [
+   "10000000-0000-4000-8000-000000000001"
+  ],
+  "zones": [],
+  "state": {
+   "reachable": true,
+   "lastSeen": 1793914039897,
+   "co2Ppm": 470,
+   "type": "STATE_CO2_SENSOR",
+   "temperature": 21.8,
+   "humidity": 31,
+   "batteryV": 3.68,
+   "batteryLow": false
+  },
+  "capabilities": {
+   "type": "SET",
+   "values": [
+    "DEVICE",
+    "TEMPERATURE",
+    "CO2",
+    "HUMIDITY",
+    "BATTERY_U",
+    "RSSI"
+   ]
+  },
+  "groups": [],
+  "timestamp": 1793914128111,
+  "type": "CO2_SENSOR"
+ },
+ "00000000-0000-4000-8000-000000000002": {
+  "id": "00000000-0000-4000-8000-000000000002",
+  "name": "Coffee machine plug",
+  "rwx": 509,
+  "manufacturer": "Develco Products A/S",
+  "model": "SPLZB-131",
+  "room": [
+   "10000000-0000-4000-8000-000000000001"
+  ],
+  "zones": [],
+  "state": {
+   "reachable": true,
+   "lastSeen": 1793914156754,
+   "isOn": true,
+   "lastChange": 1793832134649,
+   "brightness": null,
+   "type": "STATE_SOCKET",
+   "upgradeStatus": "OK",
+   "lqi": 116,
+   "rssi": -64,
+   "totalPower": 49.074,
+   "totalSince": 1724675455849,
+   "powerToday": 0.258,
+   "powerYesterday": 0.378,
+   "activePower": 0.0
+  },
+  "capabilities": {
+   "type": "SET",
+   "values": [
+    "DEVICE",
+    "ACTIVE_POWER",
+    "MEASURE_POWER",
+    "IDENTIFY",
+    "ZGB",
+    "CONTROL_POWER",
+    "UPGRADE",
+    "ON_OFF"
+   ]
+  },
+  "groups": [],
+  "timestamp": 1793914156765,
+  "type": "POWER_SOCKET"
+ },
+ "00000000-0000-4000-8000-000000000003": {
+  "id": "00000000-0000-4000-8000-000000000003",
+  "name": "Doorbell",
+  "rwx": 509,
+  "manufacturer": "Nexa",
+  "model": "Doorbell",
+  "room": [
+   "10000000-0000-4000-8000-000000000001"
+  ],
+  "zones": [],
+  "state": {
+   "reachable": true,
+   "lastSeen": 1793892301148,
+   "alert": true,
+   "type": "STATE_DOORBELL"
+  },
+  "capabilities": {
+   "type": "SET",
+   "values": [
+    "DEVICE",
+    "GENERATE_ALERT"
+   ]
+  },
+  "groups": [],
+  "timestamp": 1793892301151,
+  "type": "DOORBELL"
+ },
+ "00000000-0000-4000-8000-000000000004": {
+  "id": "00000000-0000-4000-8000-000000000004",
+  "name": "Desk lamp",
+  "rwx": 509,
+  "manufacturer": "LEDVANCE",
+  "model": "A60 RGBW Value II",
+  "room": [
+   "10000000-0000-4000-8000-000000000001"
+  ],
+  "zones": [],
+  "state": {
+   "reachable": true,
+   "lastSeen": 1793914107284,
+   "isOn": false,
+   "brightness": 1,
+   "hue": 4.1887902047863905,
+   "saturation": 1,
+   "temperature": -1,
+   "colorMode": "hs",
+   "transitionMsec": null,
+   "minTemperature": 1901,
+   "maxTemperature": 6535,
+   "type": "STATE_LIGHT",
+   "upgradeStatus": "OK",
+   "lqi": 36,
+   "rssi": -84,
+   "lastChange": 1793892340822
+  },
+  "capabilities": {
+   "type": "SET",
+   "values": [
+    "DEVICE",
+    "TRANSITION",
+    "CONFIGURABLE",
+    "COLOR_LOOP",
+    "BRIGHTNESS",
+    "ALERT",
+    "CONTROL_LIGHT",
+    "UPGRADE",
+    "IDENTIFY",
+    "ZGB",
+    "COLOR_TEMP",
+    "STARTUP_VALS",
+    "ON_OFF",
+    "COLOR_HS"
+   ]
+  },
+  "groups": [],
+  "timestamp": 1793914107290,
+  "type": "LIGHT"
+ },
+ "00000000-0000-4000-8000-000000000005": {
+  "id": "00000000-0000-4000-8000-000000000005",
+  "name": "Hall thermostat",
+  "manufacturer": "Acme",
+  "model": "T1",
+  "room": [
+   "10000000-0000-4000-8000-000000000001"
+  ],
+  "state": {
+   "type": "STATE_THERMOSTAT",
+   "reachable": true,
+   "lastSeen": 1790000000000,
+   "temperature": 21.0,
+   "targetTemp": 22.0,
+   "heatingDemand": 0.4
+  },
+  "capabilities": {
+   "type": "SET",
+   "values": [
+    "DEVICE",
+    "TEMPERATURE",
+    "CONTROL_TEMPERATURE"
+   ]
+  },
+  "type": "THERMOSTAT",
+  "timestamp": 1790000000000
+ }
+}

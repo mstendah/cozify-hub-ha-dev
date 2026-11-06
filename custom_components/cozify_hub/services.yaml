@@ -1,0 +1,47 @@
+run_scene:
+  fields:
+    config_entry_id: {required: false, selector: {config_entry: {integration: cozify_hub}}}
+    scene: {required: true, example: "Evening", selector: {text: {}}}
+    state: {required: false, default: "on", selector: {select: {options: ["on", "off"]}}}
+set_rule_state:
+  fields:
+    config_entry_id: {required: false, selector: {config_entry: {integration: cozify_hub}}}
+    rule: {required: true, example: "Toimiston valot", selector: {text: {}}}
+    state: {required: true, selector: {select: {options: ["on", "off"]}}}
+delete_rule:
+  fields:
+    config_entry_id: {required: false, selector: {config_entry: {integration: cozify_hub}}}
+    rule: {required: true, selector: {text: {}}}
+    confirm: {required: true, selector: {boolean: {}}}
+deploy_custom_rule:
+  fields:
+    config_entry_id: {required: false, selector: {config_entry: {integration: cozify_hub}}}
+    source: {required: false, selector: {text: {multiline: true}}}
+    file: {required: false, example: "/config/cozify/my_rule.py", selector: {text: {}}}
+    preserve_instances: {required: false, default: true, selector: {boolean: {}}}
+    turn_on: {required: false, default: true, selector: {boolean: {}}}
+    instance: {required: false, selector: {object: {}}}
+get_rule_log:
+  fields:
+    config_entry_id: {required: false, selector: {config_entry: {integration: cozify_hub}}}
+    rule_type: {required: false, selector: {text: {}}}
+get_rule_proposals:
+  fields:
+    config_entry_id: {required: false, selector: {config_entry: {integration: cozify_hub}}}
+    entity_ids: {required: false, selector: {entity: {multiple: true, integration: cozify_hub}}}
+    device_ids: {required: false, selector: {object: {}}}
+    room: {required: false, selector: {text: {}}}
+    max: {required: false, default: 5, selector: {number: {min: 1, max: 20}}}
+create_rule_from_proposal:
+  fields:
+    config_entry_id: {required: false, selector: {config_entry: {integration: cozify_hub}}}
+    proposal: {required: true, selector: {object: {}}}
+    name: {required: false, selector: {text: {}}}
+suggest_workload_split:
+  fields:
+    config_entry_id: {required: false, selector: {config_entry: {integration: cozify_hub}}}
+    notify: {required: false, default: false, selector: {boolean: {}}}
+send_command:
+  fields:
+    config_entry_id: {required: false, selector: {config_entry: {integration: cozify_hub}}}
+    commands: {required: true, selector: {object: {}}}

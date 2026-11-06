@@ -1,0 +1,227 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Connect Cozify account",
+        "description": "Enter the email address of your Cozify account. A one-time code will be sent to it.",
+        "data": {
+          "email": "Email"
+        }
+      },
+      "code": {
+        "title": "Enter the code",
+        "description": "Enter the one-time code sent to {email}.",
+        "data": {
+          "code": "One-time code"
+        }
+      },
+      "hub": {
+        "title": "Select hub",
+        "data": {
+          "hub_id": "Hub"
+        }
+      },
+      "reauth_confirm": {
+        "title": "Sign in again",
+        "description": "The Cozify credentials for {email} expired. A new one-time code will be sent."
+      }
+    },
+    "error": {
+      "invalid_code": "The code was not accepted. Codes are single use; request a new one.",
+      "cannot_connect": "Cannot reach Cozify.",
+      "unknown": "Unexpected error."
+    },
+    "abort": {
+      "already_configured": "This hub is already configured.",
+      "no_hubs": "No additional hubs found for this account.",
+      "cannot_connect": "Cannot reach the hub.",
+      "invalid_auth": "Authentication failed.",
+      "remote_unavailable": "Remote access is not enabled for this hub and it was not found on the local network.",
+      "reauth_successful": "Re-authentication was successful."
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "Connection",
+        "description": "Home Assistant uses the local network when the hub is reachable and falls back to the Cozify cloud relay.",
+        "data": {
+          "host": "Hub IP address / hostname (optional)",
+          "prefer_local": "Prefer local connection"
+        }
+      }
+    }
+  },
+  "services": {
+    "run_scene": {
+      "name": "Run scene",
+      "description": "Turn a hub scene on or off.",
+      "fields": {
+        "config_entry_id": {
+          "name": "Hub",
+          "description": "Hub (needed if several are configured)."
+        },
+        "scene": {
+          "name": "Scene",
+          "description": "Scene name or id."
+        },
+        "state": {
+          "name": "State",
+          "description": "on or off."
+        }
+      }
+    },
+    "set_rule_state": {
+      "name": "Set rule state",
+      "description": "Enable or disable a hub rule.",
+      "fields": {
+        "config_entry_id": {
+          "name": "Hub",
+          "description": "Hub."
+        },
+        "rule": {
+          "name": "Rule",
+          "description": "Rule name or id."
+        },
+        "state": {
+          "name": "State",
+          "description": "on or off."
+        }
+      }
+    },
+    "delete_rule": {
+      "name": "Delete rule",
+      "description": "Delete a rule instance from the hub.",
+      "fields": {
+        "config_entry_id": {
+          "name": "Hub",
+          "description": "Hub."
+        },
+        "rule": {
+          "name": "Rule",
+          "description": "Rule name or id."
+        },
+        "confirm": {
+          "name": "Confirm",
+          "description": "Must be true."
+        }
+      }
+    },
+    "deploy_custom_rule": {
+      "name": "Deploy custom rule",
+      "description": "Install or upgrade a Python custom rule on the hub. Existing instances are recreated with their settings.",
+      "fields": {
+        "config_entry_id": {
+          "name": "Hub",
+          "description": "Hub."
+        },
+        "source": {
+          "name": "Source",
+          "description": "Rule source code."
+        },
+        "file": {
+          "name": "File",
+          "description": "Path to a .py file (must be in allowlist_external_dirs)."
+        },
+        "preserve_instances": {
+          "name": "Preserve instances",
+          "description": "Recreate existing instances after install."
+        },
+        "turn_on": {
+          "name": "Turn on",
+          "description": "Turn recreated instances on."
+        },
+        "instance": {
+          "name": "New instance",
+          "description": "Config for one new instance (inputs/outputs/extras/name)."
+        }
+      }
+    },
+    "get_rule_log": {
+      "name": "Get rule log",
+      "description": "Read the hub rule log (UTC times).",
+      "fields": {
+        "config_entry_id": {
+          "name": "Hub",
+          "description": "Hub."
+        },
+        "rule_type": {
+          "name": "Rule type",
+          "description": "Optional rule type filter."
+        }
+      }
+    },
+    "get_rule_proposals": {
+      "name": "Get rule proposals",
+      "description": "Ask the hub which rules it suggests for devices.",
+      "fields": {
+        "config_entry_id": {
+          "name": "Hub",
+          "description": "Hub."
+        },
+        "entity_ids": {
+          "name": "Entities",
+          "description": "Cozify entities."
+        },
+        "device_ids": {
+          "name": "Device ids",
+          "description": "Cozify device ids."
+        },
+        "room": {
+          "name": "Room",
+          "description": "Room id."
+        },
+        "max": {
+          "name": "Maximum",
+          "description": "Maximum proposals."
+        }
+      }
+    },
+    "create_rule_from_proposal": {
+      "name": "Create rule from proposal",
+      "description": "Create a hub rule from a proposal returned by get_rule_proposals.",
+      "fields": {
+        "config_entry_id": {
+          "name": "Hub",
+          "description": "Hub."
+        },
+        "proposal": {
+          "name": "Proposal",
+          "description": "A proposal object."
+        },
+        "name": {
+          "name": "Name",
+          "description": "Optional new rule name."
+        }
+      }
+    },
+    "suggest_workload_split": {
+      "name": "Suggest workload split",
+      "description": "Analyse automations and recommend which should run on the hub, in Home Assistant, or split.",
+      "fields": {
+        "config_entry_id": {
+          "name": "Hub",
+          "description": "Hub."
+        },
+        "notify": {
+          "name": "Notify",
+          "description": "Also create a persistent notification."
+        }
+      }
+    },
+    "send_command": {
+      "name": "Send raw command",
+      "description": "Send raw device commands as documented in the Cozify API (PUT /devices/command).",
+      "fields": {
+        "config_entry_id": {
+          "name": "Hub",
+          "description": "Hub."
+        },
+        "commands": {
+          "name": "Commands",
+          "description": "List of command objects."
+        }
+      }
+    }
+  }
+}

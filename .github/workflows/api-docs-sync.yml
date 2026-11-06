@@ -1,0 +1,45 @@
+name: Sync Cozify API docs
+on:
+  schedule: [{cron: "17 5 * * 1"}]
+  workflow_dispatch:
+permissions:
+  contents: write
+  pull-requests: write
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: {python-version: "3.13"}
+      - run: pip install -r requirements_test.txt
+      - name: Regenerate spec from the published docs
+        id: sync
+        run: |
+          python tools/sync_api_docs.py --summary | tee sync.txt
+          python tools/coverage_report.py > coverage.txt || true
+          {
+            echo "body<<EOF"
+            echo "Automated sync of \`api_spec.json\` with the published Cozify Hub API documentation."
+            echo
+            echo '```'
+            cat sync.txt
+            echo '```'
+            echo
+            echo "<details><summary>Coverage</summary>"
+            echo
+            echo '```'
+            head -60 coverage.txt
+            echo '```'
+            echo "</details>"
+            echo "EOF"
+          } >> "$GITHUB_OUTPUT"
+      - name: Run the guards against the new spec
+        run: pytest -q tests/test_sync_tool.py
+      - uses: peter-evans/create-pull-request@v7
+        with:
+          branch: chore/api-docs-sync
+          title: "chore: sync Cozify API docs"
+          commit-message: "chore: sync api_spec.json with Cozify API docs"
+          body: ${{ steps.sync.outputs.body }}
+          labels: api-docs
