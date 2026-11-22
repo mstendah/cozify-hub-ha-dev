@@ -82,6 +82,7 @@ row: {type: simple-entity, entity: binary_sensor.hub_rule_device_monitor, name: 
 | `CONTROL_LIGHT` (+ `COLOR_HS`, `COLOR_TEMP`, `BRIGHTNESS`, `TRANSITION`) | `light` |
 | `ON_OFF` (sockets, relays) | `switch` (`binary_sensor` Power in read-only mode) |
 | `CONTROL_TEMPERATURE` | `climate` (heat, target temperature); `sensor` target temperature in read-only mode |
+| `ANALOG_VALUE` (e.g. valve position "ohjaus (%)") | `sensor` (unit % if the device name contains "(%)") |
 | `TEMPERATURE`, `HUMIDITY`, `CO2`, `PRESSURE`, `LUX`, power/energy/current/phase values, battery | `sensor` |
 | `MOTION`, `CONTACT`, `MOISTURE`, `SMOKE`, `TWILIGHT`, `SIREN`, battery low, reachable | `binary_sensor` |
 | `GENERATE_ALERT` (doorbells) | `event` + bus event `cozify_hub_dev_event` |

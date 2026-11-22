@@ -29,6 +29,7 @@ CO2 = _NAMES["Air quality sensor"]
 SOCKET = _NAMES["Coffee machine plug"]
 DOORBELL = _NAMES["Doorbell"]
 THERMO = _NAMES["Hall thermostat"]
+VALVE = _NAMES["Valve control (%)"]
 RULE = "20000000-0000-4000-8000-000000000001"
 SCENE = "30000000-0000-4000-8000-000000000001"
 

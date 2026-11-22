@@ -7,7 +7,7 @@ from pytest_homeassistant_custom_component.common import async_fire_time_changed
 
 from custom_components.cozify_hub_dev.const import DOMAIN, EVENT_DOORBELL
 
-from .conftest import CO2, DOORBELL, LIGHT, RULE, SOCKET, THERMO
+from .conftest import CO2, DOORBELL, LIGHT, RULE, SOCKET, THERMO, VALVE
 
 
 def _ent(hass, platform, suffix):
@@ -112,3 +112,24 @@ async def test_generic_defs_follow_spec(hass, setup):
     keys = {d.key for d in _sensor_defs_for(coordinator, CO2)}
     assert "lux" in keys  # curated
     assert "x_motionLevel" in keys  # spec-driven fallback, no curated mapping
+
+
+async def test_analog_value_sensor(hass: HomeAssistant, setup):
+    """Ouman valve control ("ohjaus (%)") is an ANALOG_VALUE device: a percent sensor, enabled by default."""
+    eid = _ent(hass, "sensor", f"{VALVE}_analog_value")
+    st = hass.states.get(eid)
+    assert st.state == "50"
+    assert st.attributes["unit_of_measurement"] == "%"
+    assert st.attributes["state_class"] == "measurement"
+    setup.push_device_delta(VALVE, {"value": 80})
+    from datetime import timedelta
+
+    from homeassistant.util import dt as dt_util
+    from pytest_homeassistant_custom_component.common import async_fire_time_changed
+
+    async_fire_time_changed(hass, dt_util.utcnow() + timedelta(seconds=10))
+    await hass.async_block_till_done()
+    assert hass.states.get(eid).state == "80"
+    # the value is no longer duplicated as a disabled generic diagnostic sensor
+    reg = er.async_get(hass)
+    assert not [e for e in reg.entities.values() if e.unique_id.endswith(f"{VALVE}_x_value")]

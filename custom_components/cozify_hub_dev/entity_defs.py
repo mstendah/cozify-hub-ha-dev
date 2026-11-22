@@ -108,6 +108,9 @@ CURATED_SENSORS: dict[str, list[SensorDef]] = {
         SensorDeviceClass.VOLTAGE, UnitOfElectricPotential.VOLT, M, EntityCategory.DIAGNOSTIC)],
     "CONTROL_TEMPERATURE": [SensorDef("heating_demand", "Heating demand", _get("heatingDemand"),
         None, PERCENTAGE, M)],
+    # Generic analog value (e.g. a BACnet valve position). The hub gives no unit; the sensor
+    # entity derives % from a "(%)" in the device name.
+    "ANALOG_VALUE": [SensorDef("analog_value", "Value", _get("value"), None, None, M)],
 }
 
 CURATED_BINARY: dict[str, list[BinaryDef]] = {
@@ -133,6 +136,7 @@ CURATED_ATTRS: dict[str, set[str]] = {
     "BATTERY_U": {"batteryV", "batteryLow"}, "MOTION": {"motion"}, "CONTACT": {"open"},
     "MOISTURE": {"moisture"}, "SMOKE": {"alert"}, "TWILIGHT": {"twilight"}, "SIREN": {"sirenOn"},
     "DEVICE": {"reachable"}, "CONTROL_TEMPERATURE": {"targetTemp", "heatingDemand"},
+    "ANALOG_VALUE": {"value"},
     "GENERATE_ALERT": {"alert"}, "ON_OFF": {"isOn"}, "LIFT": {"liftPct"}, "TILT": {"tiltPct"},
     "COLOR_HS": {"hue", "saturation"}, "BRIGHTNESS": {"brightness"}, "COLOR_TEMP": {"temperature"},
     "TRANSITION": {"transitionMsec"}, "SHUTTER": {"motorStatus", "calibrating"},

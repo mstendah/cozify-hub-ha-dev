@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.2.1 - dev channel
+* **New sensor for analog-value devices** (`ANALOG_VALUE`), e.g. the Ouman valve position "L1 ohjaus (%)",
+  "LV ohjaus (%)" and "L1 raportoitu (%)". It is enabled by default and gets the unit % when the device name
+  contains "(%)" (the hub itself gives no unit). Previously these values only existed as a disabled generic
+  diagnostic sensor. The old disabled `x_value` entity, if it exists in your registry, can be deleted.
+
 ## 0.2.0 - dev channel
 * **Read-only mode.** A hub can now be set up (or switched in the integration options) as read-only so nothing
   can ever be written to it. It is enforced in the API client itself: every request that is not a `GET` is

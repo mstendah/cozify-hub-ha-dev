@@ -7,7 +7,7 @@ from typing import Any
 
 from homeassistant.components.sensor import SensorDeviceClass, SensorEntity
 from homeassistant.config_entries import ConfigEntry
-from homeassistant.const import EntityCategory
+from homeassistant.const import PERCENTAGE, EntityCategory
 from homeassistant.core import HomeAssistant
 from homeassistant.helpers.entity_platform import AddEntitiesCallback
 
@@ -30,10 +30,16 @@ class CozifySensor(CozifyEntity, SensorEntity):
         self._def = d
         self._attr_name = d.name
         self._attr_device_class = d.device_class
-        self._attr_native_unit_of_measurement = d.unit
         self._attr_state_class = d.state_class
         self._attr_entity_category = d.category
         self._attr_entity_registry_enabled_default = d.enabled
+
+    @property
+    def native_unit_of_measurement(self) -> str | None:
+        if self._def.key == "analog_value":
+            name = self.device.get("name") or ""
+            return PERCENTAGE if "(%)" in name else None
+        return self._def.unit
 
     @property
     def native_value(self) -> Any:
