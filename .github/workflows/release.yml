@@ -1,0 +1,33 @@
+name: Release
+on:
+  # Release automatically when manifest.json gets a version that has no tag yet.
+  push:
+    branches: [main]
+    paths: [custom_components/cozify_hub_dev/manifest.json]
+  # Or press "Run workflow" and pick how to bump the version.
+  workflow_dispatch:
+    inputs:
+      bump:
+        description: Version bump (first release uses the current version)
+        type: choice
+        options: [patch, minor, major]
+        default: patch
+permissions:
+  contents: write
+concurrency: release
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with: {python-version: "3.13"}
+      - run: pip install -r requirements_test.txt
+      - name: Tests must pass before releasing
+        run: pytest -q
+      - name: Create release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: tools/release.sh "${{ github.event_name == 'workflow_dispatch' && inputs.bump || 'current' }}"

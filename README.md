@@ -196,3 +196,15 @@ Unofficial community integration, not affiliated with Cozify Oy. Built from the 
 ## License
 
 MIT
+
+## Releasing
+
+Releases are automated (`.github/workflows/release.yml`, script `tools/release.sh`):
+
+* **Run workflow** (Actions → Release): pick `patch`, `minor` or `major`. The version in `manifest.json` is bumped from the
+  latest `v*` tag, a `CHANGELOG.md` section is generated from the commit subjects (unless you wrote one first),
+  the change is committed, tagged `vX.Y.Z` and published as a GitHub release with that section as release notes.
+* **Push**: if a push to `main` changes `manifest.json` to a version that has no tag yet, that version is released with its
+  existing `CHANGELOG.md` section.
+
+Tests must pass first. HACS then offers the new version under Update.
