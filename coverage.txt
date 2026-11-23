@@ -1,0 +1,67 @@
+Docs revision 0.8 (2026-09-23)
+
+79 capabilities served by generic spec-driven entities only:
+  ALERT, BACNET, BASS, BATTERY_C, CLEAR_ALERT, CO, CONFIGURABLE, CONTROL_MODE, CONTROL_PRESET, DETERIORATION, DEVICE_HEALTH, DIMMER, EXT_THERMOMETER, FAN_MODE, FLOW, FLOW_TEMPERATURE, FLOW_VOLUME, FOSCAM_API, G_ALARM, G_NOTIFICATION, HIGH_TEMP, HOME_SWITCH, HUE_SWITCH, IAS_ACE, IDENTIFY, IKEA_ONOFF_SWITCH, IKEA_RC, KNX_AWAY_SWITCH, LIVE_FEED, LOUDNESS, LOW_TEMP, MUTE, NEXT, NOX, ONVIF_API, PASSIVITY, PHONE_MAKE_CALL, PHONE_RECEIVE_CALL, PLAY_MUTE, PLAY_TONE, PLAY_VOLUME, PM25, POWER_SAVE, POWER_SOURCE, PREVIOUS, PROXIMITY, PUSH_NOTIFICATION, RAW_MESSAGE, RC_DIMMER, RECORD_AUDIO, REC_MUTE, REC_VOLUME, REMOTE_CONTROL, ROAMING, RSSI, RW_VALUE, SEEK, SELF_MOTION, SETPOINT, SETPOINT_TEMPERATURE, SIGNAL, SIM_PIN, STARTUP_VALS, STATE_MACHINE, STOP, TREBLE, UPGRADE, USER_PRESENCE, VALVE, VOC, VOICE_CALL, VOICE_CALL_AUTOANSWER, VOLUME, VOX, VU, VU_FN_FIREPLACE, WEARABLE, ZGB, ZW
+
+61 documented endpoints without a typed wrapper (reachable via HubClient.call):
+  DELETE /alarms
+  DELETE /devices/configuration
+  DELETE /groups
+  DELETE /hub/colors
+  GET /alarms
+  GET /bacnet/devices
+  GET /bacnet/localdevicetypes
+  GET /bacnet/objecttypes
+  GET /bacnet/settings
+  GET /devices/configuration
+  GET /groups
+  GET /hub
+  GET /hub/433devices
+  GET /hub/colors
+  GET /hub/features
+  GET /hub/housetype
+  GET /hub/housetypes
+  GET /hub/reboot
+  GET /hub/restart
+  GET /hub/scan
+  GET /hub/serialports
+  GET /hub/shutdown
+  GET /hub/stopscan
+  GET /hub/sync
+  GET /hub/timezones
+  GET /hub/tz
+  GET /hub/users
+  GET /hub/zigbeescan
+  GET /hub/zigbeestatus
+  GET /log
+  POST /bacnet/defaultsettings
+  POST /bacnet/device
+  POST /bacnet/pair
+  POST /bacnet/scan
+  POST /bacnet/settings
+  POST /hub/activatefeature
+  POST /hub/claim
+  POST /hub/colors
+  POST /hub/lockconfig
+  POST /hub/pair433
+  POST /hub/pairIp
+  POST /hub/pairairpatrol
+  POST /hub/pairphilips
+  POST /hub/protocolconfig
+  POST /hub/remotepair
+  POST /hub/serialport
+  POST /hub/zigbeechannel
+  POST /hub/zigbeepower
+  POST /hub/zigbeesettings
+  PUT /alarms/close
+  PUT /devices/configuration
+  PUT /devices/preset
+  PUT /groups
+  PUT /groups/command
+  PUT /hub/autoconfig
+  PUT /hub/housetype
+  PUT /hub/name
+  PUT /hub/scan
+  PUT /hub/tz
+  PUT /rooms/order
+  PUT /rules/onConfiguration

@@ -1,0 +1,4 @@
+docs revision: 0.8 -> 0.8
+new capabilities: -
+new endpoints: -
+wrote /home/runner/work/cozify-hub-ha-dev/cozify-hub-ha-dev/custom_components/cozify_hub_dev/api_spec.json (docs revision 0.8)
